@@ -1,6 +1,6 @@
-export const setCurrentPage = (page) => {
-    return {
-        type: "setCurrentPage",
-        value: page,
-    }
+export const setCurrentPage = page => {
+  return {
+    type: 'setCurrentPage',
+    value: page,
+  }
 }
