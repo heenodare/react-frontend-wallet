@@ -11,6 +11,8 @@ import BubbleChart from '@material-ui/icons/BubbleChart';
 import FindReplace from '@material-ui/icons/FindReplace';
 import AppBar from '@material-ui/core/AppBar';
 import { navigate } from "gatsby";
+import { connect } from 'react-redux';
+import { setCurrentPage } from './action';
 
 const useStyles = makeStyles({
   root: {
@@ -23,22 +25,33 @@ const useStyles = makeStyles({
 });
 
 
+const mapStateToProps = (state) => {
+  return {
+    CurrentPage: state.footer.CurrentPage,
+  };
+}
 
-export default function LabelBottomNavigation() {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentPage: page => {
+      dispatch(setCurrentPage(page));
+    },
+  };
+}
+
+function LabelBottomNavigation(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState('discover');
 
   function handleChange(event, newValue) {
-    setValue(newValue);
+    props.setCurrentPage(newValue);
     switch (newValue) {
-      case "discover":
-        navigate("/");
+      case 'discover':
+        navigate('/');
         break;
-      case "chat":
-        navigate("/page-2/");
+      case 'chat':
+        navigate('/page-2/');
         break;
       default:
-        navigate("/");
         break;
     }
   }
@@ -46,7 +59,7 @@ export default function LabelBottomNavigation() {
   return (
 
     <AppBar position="fixed" color="primary" className={classes.appBar}>
-      <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
+      <BottomNavigation value={props.CurrentPage} onChange={handleChange} className={classes.root}>
         <BottomNavigationAction label="Discover" value="discover" icon={<FindReplace />} />
         <BottomNavigationAction label="Chat" value="chat" icon={<Chat />} />
         <BottomNavigationAction label="Following" value="following" icon={<BubbleChart />} />
@@ -55,3 +68,5 @@ export default function LabelBottomNavigation() {
     </AppBar>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(LabelBottomNavigation);
