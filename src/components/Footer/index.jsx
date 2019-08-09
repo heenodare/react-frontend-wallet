@@ -52,7 +52,7 @@ function LabelBottomNavigation(props) {
         navigate('/')
         break
       case 'chat':
-        navigate('/page-2/')
+        navigate('/chat/')
         break
       default:
         break
