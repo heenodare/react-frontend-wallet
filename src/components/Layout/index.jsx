@@ -5,7 +5,6 @@ import GlobalStyles from 'util/style/GlobalStyles'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
-import Container from '@material-ui/core/Container'
 
 import config from '../../../config/meta'
 
@@ -14,10 +13,8 @@ const Layout = ({ children }) => (
     <>
       <GlobalStyles />
       <Header siteTitle={config.siteTitle || config.siteTitleAlt} />
-      <Container maxWidth="lg">
-        {children}
-        <Footer />
-      </Container>
+      {children}
+      <Footer />
     </>
   </ThemeProvider>
 )
