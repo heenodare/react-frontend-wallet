@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import Chat from '@material-ui/icons/Chat'
 import Settings from '@material-ui/icons/Settings'
 import BubbleChart from '@material-ui/icons/BubbleChart'
 import FindReplace from '@material-ui/icons/FindReplace'
@@ -17,6 +16,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   appBar: {
+    position: 'fixed',
     top: 'auto',
     bottom: 0,
   },
@@ -51,9 +51,6 @@ function LabelBottomNavigation(props) {
       case 'discover':
         navigate('/')
         break
-      case 'chat':
-        navigate('/chat/')
-        break
       default:
         break
     }
@@ -71,7 +68,6 @@ function LabelBottomNavigation(props) {
           value="discover"
           icon={<FindReplace />}
         />
-        <BottomNavigationAction label="Chat" value="chat" icon={<Chat />} />
         <BottomNavigationAction
           label="Following"
           value="following"

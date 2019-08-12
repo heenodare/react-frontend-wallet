@@ -1,18 +1,8 @@
 import React from 'react'
-import { MessageList, Button, Input } from 'react-chat-elements'
-import AppBar from '@material-ui/core/AppBar'
+import { MessageList } from 'react-chat-elements'
 import 'react-chat-elements/dist/main.css'
-import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles({
-  appBar: {
-    position: 'absolute',
-    top: 'auto',
-    bottom: 0,
-  },
-})
 export default function AlignItemsList() {
-  const classes = useStyles()
   return (
     <>
       <MessageList
@@ -69,18 +59,98 @@ export default function AlignItemsList() {
             text: '+1',
             date: new Date(),
           },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: '+1',
+            date: new Date(),
+          },
         ]}
       />
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <Input
-          className={classes.appBar}
-          placeholder="Type here..."
-          multiline
-          rightButtons={
-            <Button color="white" backgroundColor="black" text="Send" />
-          }
-        />
-      </AppBar>
     </>
   )
 }

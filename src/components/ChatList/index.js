@@ -71,7 +71,18 @@ export default function AlignItemsList() {
 
   return (
     <List className={classes.root}>
-      {ChatList([{ key: 1 }, { key: 2 }, { key: 3 }])}
+      {ChatList([
+        { key: 1 },
+        { key: 2 },
+        { key: 3 },
+        { key: 3 },
+        { key: 3 },
+        { key: 3 },
+        { key: 3 },
+        { key: 3 },
+        { key: 3 },
+        { key: 3 },
+      ])}
     </List>
   )
 }
