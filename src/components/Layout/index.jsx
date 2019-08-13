@@ -5,7 +5,6 @@ import GlobalStyles from 'util/style/GlobalStyles'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
-import Paper from '@material-ui/core/Paper'
 import config from '../../../config/meta'
 
 const Layout = ({ children }) => (
@@ -13,7 +12,7 @@ const Layout = ({ children }) => (
     <>
       <GlobalStyles />
       <Header siteTitle={config.siteTitle || config.siteTitleAlt} />
-      <Paper square>{children}</Paper>
+      <div style={{ paddingBottom: 50 }}>{children}</div>
       <Footer />
     </>
   </ThemeProvider>

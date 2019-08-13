@@ -75,13 +75,13 @@ export default function AlignItemsList() {
         { key: 1 },
         { key: 2 },
         { key: 3 },
-        { key: 3 },
-        { key: 3 },
-        { key: 3 },
-        { key: 3 },
-        { key: 3 },
-        { key: 3 },
-        { key: 3 },
+        { key: 4 },
+        { key: 5 },
+        { key: 6 },
+        { key: 7 },
+        { key: 73 },
+        { key: 8 },
+        { key: 9 },
       ])}
     </List>
   )
