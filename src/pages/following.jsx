@@ -5,7 +5,7 @@ import UserList from 'components/UserList'
 
 const SecondPage = () => (
   <Layout>
-    <SEO title="Chat" />
+    <SEO title="Following" />
     <UserList />
   </Layout>
 )

@@ -39,13 +39,7 @@ export default function AlignItemsList() {
             />
           </ListItemAvatar>
           <ListItemText
-            primary={
-              <React.Fragment>
-                {'Chat Title'}
-                <Comment />
-                {123}
-              </React.Fragment>
-            }
+            primary={<React.Fragment>Chat Title</React.Fragment>}
             secondary={
               <React.Fragment>
                 {' I am the lateset message........'}
@@ -54,6 +48,8 @@ export default function AlignItemsList() {
                 {value.key}
                 <ThumbDown />
                 {value.key}
+                <Comment />
+                {123}
               </React.Fragment>
             }
           />
