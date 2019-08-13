@@ -16,7 +16,6 @@ const useStyles = makeStyles({
     width: '100%',
   },
   appBar: {
-    position: 'fixed',
     top: 'auto',
     bottom: 0,
   },
@@ -60,7 +59,7 @@ function LabelBottomNavigation(props) {
   }
 
   return (
-    <AppBar position="fixed" color="primary" className={classes.appBar}>
+    <AppBar position="sticky" color="primary" className={classes.appBar}>
       <BottomNavigation
         value={CurrentPage}
         onChange={handleChange}

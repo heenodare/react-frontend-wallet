@@ -13,9 +13,7 @@ const Layout = ({ children }) => (
     <>
       <GlobalStyles />
       <Header siteTitle={config.siteTitle || config.siteTitleAlt} />
-      <Paper square style={{ paddingBottom: 50 }}>
-        {children}
-      </Paper>
+      <Paper square>{children}</Paper>
       <Footer />
     </>
   </ThemeProvider>

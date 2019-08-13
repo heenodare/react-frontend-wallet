@@ -142,8 +142,8 @@ export default function PrimarySearchAppBar() {
   )
 
   return (
-    <div className={classes.grow}>
-      <AppBar position="static">
+    <>
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             edge="start"
@@ -197,6 +197,6 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </div>
+    </>
   )
 }
