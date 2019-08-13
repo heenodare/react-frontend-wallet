@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import ChatList from 'components/ChatList'
+import UserList from 'components/UserList'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -85,10 +86,10 @@ export default function FullWidthTabs() {
           <ChatList />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Trending
+          <ChatList />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          User
+          <UserList />
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           Comment

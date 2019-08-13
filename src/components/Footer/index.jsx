@@ -51,6 +51,9 @@ function LabelBottomNavigation(props) {
       case 'discover':
         navigate('/')
         break
+      case 'following':
+        navigate('/following')
+        break
       default:
         break
     }
