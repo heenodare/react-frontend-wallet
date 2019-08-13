@@ -6,9 +6,6 @@ import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
-import Comment from '@material-ui/icons/Comment'
-import ThumbUp from '@material-ui/icons/ThumbUp'
-import ThumbDown from '@material-ui/icons/ThumbDown'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +22,7 @@ export default function AlignItemsList() {
 
   function ChatItem(item) {
     const { value } = item
+
     return (
       <>
         <ListItem
@@ -39,21 +37,13 @@ export default function AlignItemsList() {
             />
           </ListItemAvatar>
           <ListItemText
-            primary={
-              <React.Fragment>
-                {'Chat Title'}
-                <Comment />
-                {123}
-              </React.Fragment>
-            }
+            primary="User Name"
             secondary={
               <React.Fragment>
-                {' I am the lateset message........'}
+                {value.key} followers
                 <br />
-                <ThumbUp />
-                {value.key}
-                <ThumbDown />
-                {value.key}
+                Most Active Group - ADA <br />
+                Last Joined CHat - BTC
               </React.Fragment>
             }
           />
