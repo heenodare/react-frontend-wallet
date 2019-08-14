@@ -10,6 +10,7 @@ import Comment from '@material-ui/icons/Comment'
 import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import { navigate } from 'gatsby'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,11 +29,7 @@ export default function AlignItemsList() {
     const { value } = item
     return (
       <>
-        <ListItem
-          alignItems="center"
-          button
-          onClick={() => console.log('test')}
-        >
+        <ListItem alignItems="center" button onClick={() => navigate('/chat')}>
           <ListItemAvatar>
             <Avatar
               alt="Remy Sharp"

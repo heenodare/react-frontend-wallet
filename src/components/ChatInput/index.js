@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles({
   appBar: {
     top: 'auto',
-    bottom: 100,
+    bottom: 0,
   },
 })
 

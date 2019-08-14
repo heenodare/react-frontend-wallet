@@ -1,13 +1,13 @@
 import React from 'react'
-import Layout from 'components/Layout'
+import ChatLayout from 'components/ChatLayout'
 import SEO from 'components/SEO'
 import Chat from 'components/Chat'
 
 const ChatPage = () => (
-  <Layout>
+  <ChatLayout>
     <SEO title="Chat" />
     <Chat />
-  </Layout>
+  </ChatLayout>
 )
 
 export default ChatPage

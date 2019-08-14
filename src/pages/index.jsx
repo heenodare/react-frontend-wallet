@@ -7,7 +7,7 @@ import Discover from '../components/Discover'
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="Home" />
+    <SEO title="Discover" />
     <CssBaseline />
     <Discover />
   </Layout>
