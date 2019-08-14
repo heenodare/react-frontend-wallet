@@ -32,7 +32,7 @@ export default function AlignItemsList() {
         <ListItem alignItems="center" button onClick={() => navigate('/chat')}>
           <ListItemAvatar>
             <Avatar
-              alt="Remy Sharp"
+              alt="avator"
               src="https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"
             />
           </ListItemAvatar>
