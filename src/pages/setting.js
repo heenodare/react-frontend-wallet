@@ -1,13 +1,13 @@
 import React from 'react'
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
-import UserList from 'components/UserList'
+import Setting from 'components/Setting'
 
-const FollowPage = () => (
+const SettingPage = () => (
   <Layout>
     <SEO title="Following" />
-    <UserList />
+    <Setting />
   </Layout>
 )
 
-export default FollowPage
+export default SettingPage
