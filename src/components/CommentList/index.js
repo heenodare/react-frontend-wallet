@@ -6,7 +6,6 @@ import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
-import Comment from '@material-ui/icons/Comment'
 import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -40,11 +39,11 @@ export default function AlignItemsList() {
             />
           </ListItemAvatar>
           <ListItemText
-            primary={<React.Fragment>Chat Title</React.Fragment>}
+            primary={
+              <React.Fragment>I am a most Liked Message. </React.Fragment>
+            }
             secondary={
               <React.Fragment>
-                {' I am the lateset message........'}
-                <br />
                 <ListItemIcon>
                   <ThumbUp />
                 </ListItemIcon>
@@ -53,10 +52,6 @@ export default function AlignItemsList() {
                   <ThumbDown />
                 </ListItemIcon>
                 {value.key}
-                <ListItemIcon>
-                  <Comment />
-                </ListItemIcon>
-                {123}
               </React.Fragment>
             }
           />
