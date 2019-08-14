@@ -54,6 +54,9 @@ function LabelBottomNavigation(props) {
       case 'following':
         navigate('/following')
         break
+      case 'setting':
+        navigate('/setting')
+        break
       default:
         break
     }
@@ -77,7 +80,7 @@ function LabelBottomNavigation(props) {
           icon={<BubbleChart />}
         />
         <BottomNavigationAction
-          label="Folder"
+          label="Setting"
           value="setting"
           icon={<Settings />}
         />
