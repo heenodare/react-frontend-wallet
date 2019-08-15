@@ -8,7 +8,8 @@ export default function AlignItemsList() {
       <MessageList
         className="message-list"
         lockable
-        toBottomHeight="100%"
+        downButton
+        downButtonBadge
         dataSource={[
           {
             position: 'right',
@@ -20,6 +21,24 @@ export default function AlignItemsList() {
             position: 'left',
             type: 'text',
             text: 'very good!',
+            date: new Date(),
+          },
+          {
+            position: 'right',
+            type: 'text',
+            text: 'How is BTC right now?',
+            date: new Date(),
+          },
+          {
+            position: 'left',
+            type: 'text',
+            text: 'very good!',
+            date: new Date(),
+          },
+          {
+            position: 'right',
+            type: 'text',
+            text: 'How is BTC right now?',
             date: new Date(),
           },
         ]}

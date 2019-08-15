@@ -7,6 +7,8 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import ChatContent from 'components/ChatContent'
+import UserList from 'components/UserList'
+import CommentList from 'components/CommentList'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -83,10 +85,10 @@ export default function FullWidthTabs() {
           <ChatContent />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <UserList />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          <CommentList />
         </TabPanel>
       </SwipeableViews>
     </div>
