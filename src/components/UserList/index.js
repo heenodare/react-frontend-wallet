@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 export default function AlignItemsList() {
   const classes = useStyles()
 
-  function ChatList(items) {
+  function UserList(items) {
     return (
       <>
         {items.map(item => (
@@ -28,7 +28,7 @@ export default function AlignItemsList() {
 
   return (
     <List className={classes.root}>
-      {ChatList([
+      {UserList([
         { key: 1 },
         { key: 2 },
         { key: 3 },
