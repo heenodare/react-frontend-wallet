@@ -4,9 +4,8 @@ React based wallet for Heenodare
 
 # How to install
 
-1. fork this repo
-2. clone the repo that you forked.
-3. run "npm install" or "yarn install"
+1. clone this repo.
+2. run "npm install" or "yarn install"
 
 # How to run it
 
