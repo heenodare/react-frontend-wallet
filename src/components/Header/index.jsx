@@ -5,11 +5,10 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import InputBase from '@material-ui/core/InputBase'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
-import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import { navigate } from 'gatsby'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -83,8 +82,15 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget)
   }
 
-  function handleMenuClose() {
+  function handleMenuClose(dest) {
     setAnchorEl(null)
+    switch (dest) {
+      case 'profile':
+        navigate('/profile')
+        break
+      default:
+        break
+    }
   }
 
   const menuId = 'primary-search-account-menu'
@@ -98,7 +104,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('profile')}>Profile</MenuItem>
     </Menu>
   )
 
@@ -109,19 +115,6 @@ export default function PrimarySearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             Heenodare
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
           <div className={classes.grow} />
           <IconButton
             edge="end"

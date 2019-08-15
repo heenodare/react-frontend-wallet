@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 export default function AlignItemsList() {
   const classes = useStyles()
 
-  function ChatItem(item) {
+  function UserItem(item) {
     const { value } = item
 
     return (
@@ -40,10 +40,11 @@ export default function AlignItemsList() {
             primary="User Name"
             secondary={
               <React.Fragment>
-                {value.key} followers
+                {value.key} {'followers'}
                 <br />
-                Most Active Group - ADA <br />
-                Last Joined CHat - BTC
+                {'Most Active Group - ADA '}
+                <br />
+                {'Last Joined CHat - BTC'}
               </React.Fragment>
             }
           />
@@ -57,7 +58,7 @@ export default function AlignItemsList() {
     return (
       <>
         {items.map(item => (
-          <ChatItem key={item.key} value={item} />
+          <UserItem key={item.key} value={item} />
         ))}
       </>
     )
