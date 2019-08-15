@@ -5,7 +5,7 @@ import Setting from 'components/Setting'
 
 const SettingPage = () => (
   <Layout>
-    <SEO title="Following" />
+    <SEO title="Setting" />
     <Setting />
   </Layout>
 )

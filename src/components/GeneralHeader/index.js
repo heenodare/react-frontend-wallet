@@ -4,11 +4,9 @@ import { fade, makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import ArrowBack from '@material-ui/icons/ArrowBack'
-import MoreIcon from '@material-ui/icons/MoreVert'
 import { navigate } from 'gatsby'
 
 const useStyles = makeStyles(theme => ({
@@ -79,10 +77,6 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl)
 
-  function handleProfileMenuOpen(event) {
-    setAnchorEl(event.currentTarget)
-  }
-
   function handleMenuClose() {
     setAnchorEl(null)
   }
@@ -116,20 +110,7 @@ export default function PrimarySearchAppBar() {
           >
             <ArrowBack />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            {' Chat Title '}
-          </Typography>
           <div className={classes.grow} />
-          <IconButton
-            edge="end"
-            aria-label="more"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <MoreIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
       {renderMenu}
