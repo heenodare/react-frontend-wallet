@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import ProfileContent from 'components/ProfileContent'
+import ProfileJoinedChat from 'components/ProfileJoinedChat'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -82,7 +83,7 @@ export default function FullWidthTabs() {
           <ProfileContent />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {'123123'}
+          <ProfileJoinedChat />
         </TabPanel>
       </SwipeableViews>
     </div>
