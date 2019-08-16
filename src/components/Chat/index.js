@@ -15,7 +15,7 @@ function TabPanel(props) {
 
   return (
     <Typography
-      component="div"
+      component="span"
       role="tabpanel"
       hidden={value !== index}
       id={`scrollable-auto-tabpanel-${index}`}

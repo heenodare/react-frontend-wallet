@@ -36,7 +36,7 @@ export default function AlignItemsList() {
           upvotes: 912351,
           downvotes: 76,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/toadstools.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 2,
@@ -45,7 +45,7 @@ export default function AlignItemsList() {
           upvotes: 912123,
           downvotes: 0,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/rain-coats.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 3,
@@ -54,7 +54,7 @@ export default function AlignItemsList() {
           upvotes: 22,
           downvotes: 6,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/heavybox.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 4,
@@ -63,7 +63,7 @@ export default function AlignItemsList() {
           upvotes: 213,
           downvotes: 762,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/boat.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 5,
@@ -72,7 +72,7 @@ export default function AlignItemsList() {
           upvotes: 231,
           downvotes: 176,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/tree.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 6,
@@ -81,7 +81,7 @@ export default function AlignItemsList() {
           upvotes: 915,
           downvotes: 2157,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/trafalgar.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 7,
@@ -90,7 +90,7 @@ export default function AlignItemsList() {
           upvotes: 912351,
           downvotes: 76,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/toadstools.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 8,
@@ -99,7 +99,7 @@ export default function AlignItemsList() {
           upvotes: 912123,
           downvotes: 0,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/rain-coats.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 9,
@@ -108,7 +108,7 @@ export default function AlignItemsList() {
           upvotes: 22,
           downvotes: 6,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/heavybox.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 10,
@@ -117,7 +117,7 @@ export default function AlignItemsList() {
           upvotes: 213,
           downvotes: 762,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/boat.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 11,
@@ -126,7 +126,7 @@ export default function AlignItemsList() {
           upvotes: 231,
           downvotes: 176,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/tree.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 12,
@@ -135,7 +135,7 @@ export default function AlignItemsList() {
           upvotes: 915,
           downvotes: 2157,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/trafalgar.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
       ])}
     </List>

@@ -1,6 +1,5 @@
 import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
@@ -20,34 +19,38 @@ export default function ChatItem(item) {
     avatarUrl,
   } = item.item
   return (
-    <>
-      <ListItem alignItems="center" button onClick={() => navigate('/chat')}>
+    <ListItem
+      style={{ flexDirection: 'column' }}
+      alignItems="center"
+      button
+      divider
+      onClick={() => navigate('/chat')}
+    >
+      <ListItem>
         <ListItemAvatar>
           <Avatar alt="avator" src={avatarUrl} />
         </ListItemAvatar>
         <ListItemText
           primary={<React.Fragment>{title}</React.Fragment>}
-          secondary={
-            <>
-              {lastMessage}
-              <br />
-              <ListItemIcon>
-                <ThumbUp />
-              </ListItemIcon>
-              {upvotes}
-              <ListItemIcon>
-                <ThumbDown />
-              </ListItemIcon>
-              {downvotes}
-              <ListItemIcon>
-                <Comment />
-              </ListItemIcon>
-              {comments}
-            </>
-          }
+          secondary={<>{lastMessage}</>}
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
+      <ListItem>
+        <ListItemIcon>
+          <ThumbUp />
+          {upvotes}
+        </ListItemIcon>
+
+        <ListItemIcon>
+          <ThumbDown />
+          {downvotes}
+        </ListItemIcon>
+
+        <ListItemIcon>
+          <Comment />
+          {comments}
+        </ListItemIcon>
+      </ListItem>
+    </ListItem>
   )
 }

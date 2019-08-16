@@ -1,6 +1,5 @@
 import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
@@ -12,8 +11,14 @@ import { navigate } from 'gatsby'
 export default function CommentItem(item) {
   const { message, title, upvotes, downvotes, avatarUrl } = item.item
   return (
-    <>
-      <ListItem alignItems="center" button onClick={() => navigate('/chat')}>
+    <ListItem
+      style={{ flexDirection: 'column' }}
+      alignItems="center"
+      button
+      divider
+      onClick={() => navigate('/chat')}
+    >
+      <ListItem>
         <ListItemAvatar>
           <Avatar src={avatarUrl} />
         </ListItemAvatar>
@@ -21,21 +26,22 @@ export default function CommentItem(item) {
           primary={<React.Fragment>{message} </React.Fragment>}
           secondary={
             <>
-              From Chat - {title}
-              <br />
-              <ListItemIcon>
-                <ThumbUp />
-              </ListItemIcon>
-              {upvotes}
-              <ListItemIcon>
-                <ThumbDown />
-              </ListItemIcon>
-              {downvotes}
+              {'From Chat - '}
+              {title}
             </>
           }
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
+      <ListItem>
+        <ListItemIcon>
+          <ThumbUp />
+          {upvotes}
+        </ListItemIcon>
+        <ListItemIcon>
+          <ThumbDown />
+          {downvotes}
+        </ListItemIcon>
+      </ListItem>
+    </ListItem>
   )
 }

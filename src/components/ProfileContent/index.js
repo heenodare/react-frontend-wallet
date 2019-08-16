@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 export default function SwitchListSecondary() {
   const classes = useStyles()
   return (
-    <>
+    <div>
       <List className={classes.root}>
         <Grid container justify="center" alignItems="center">
           <ListItem>
@@ -68,6 +68,6 @@ export default function SwitchListSecondary() {
           }}
         />
       </List>
-    </>
+    </div>
   )
 }

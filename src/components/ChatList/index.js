@@ -38,7 +38,7 @@ export default function AlignItemsList() {
           downvotes: 991,
           comments: 103292,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/slimy.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 2,
@@ -48,7 +48,7 @@ export default function AlignItemsList() {
           downvotes: 911,
           comments: 10,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/scarecrow.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 3,
@@ -58,7 +58,7 @@ export default function AlignItemsList() {
           downvotes: 9131,
           comments: 11232,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/fruit-stall.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 4,
@@ -68,7 +68,7 @@ export default function AlignItemsList() {
           downvotes: 91,
           comments: 102,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/pipe-sculpture.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 5,
@@ -78,7 +78,7 @@ export default function AlignItemsList() {
           downvotes: 91812351,
           comments: 101,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/toadstools.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 6,
@@ -99,7 +99,7 @@ export default function AlignItemsList() {
           downvotes: 991,
           comments: 103292,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/slimy.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 8,
@@ -109,7 +109,7 @@ export default function AlignItemsList() {
           downvotes: 911,
           comments: 10,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/scarecrow.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 9,
@@ -119,7 +119,7 @@ export default function AlignItemsList() {
           downvotes: 9131,
           comments: 11232,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/fruit-stall.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 10,
@@ -129,7 +129,7 @@ export default function AlignItemsList() {
           downvotes: 91,
           comments: 102,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/pipe-sculpture.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 11,
@@ -139,7 +139,7 @@ export default function AlignItemsList() {
           downvotes: 91812351,
           comments: 101,
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/toadstools.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 12,

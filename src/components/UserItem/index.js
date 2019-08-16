@@ -1,6 +1,5 @@
 import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
@@ -14,6 +13,7 @@ export default function UserItem(item) {
       <ListItem
         alignItems="flex-start"
         button
+        divider
         onClick={() =>
           navigate('/profile', {
             state: item.item,
@@ -36,7 +36,6 @@ export default function UserItem(item) {
           }
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
     </>
   )
 }

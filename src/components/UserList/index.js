@@ -45,7 +45,7 @@ export default function AlignItemsList() {
           mostActive: 'TRON',
           lastJoined: 'MONERO',
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/toadstools.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 3,
@@ -99,7 +99,7 @@ export default function AlignItemsList() {
           mostActive: 'TRON',
           lastJoined: 'MONERO',
           avatarUrl:
-            'http://writingexercises.co.uk/images2/randomimage/toadstools.jpg',
+            'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
         },
         {
           key: 9,
