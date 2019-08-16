@@ -11,35 +11,39 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from 'gatsby'
 
 export default function ChatItem(item) {
-  const { value } = item
+  const {
+    title,
+    lastMessage,
+    upvotes,
+    downvotes,
+    comments,
+    avatarUrl,
+  } = item.item
   return (
     <>
       <ListItem alignItems="center" button onClick={() => navigate('/chat')}>
         <ListItemAvatar>
-          <Avatar
-            alt="avator"
-            src="https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"
-          />
+          <Avatar alt="avator" src={avatarUrl} />
         </ListItemAvatar>
         <ListItemText
-          primary={<React.Fragment>Chat Title</React.Fragment>}
+          primary={<React.Fragment>{title}</React.Fragment>}
           secondary={
-            <React.Fragment>
-              {' I am the lateset message........'}
+            <>
+              {lastMessage}
               <br />
               <ListItemIcon>
                 <ThumbUp />
               </ListItemIcon>
-              {value.key}
+              {upvotes}
               <ListItemIcon>
                 <ThumbDown />
               </ListItemIcon>
-              {value.key}
+              {downvotes}
               <ListItemIcon>
                 <Comment />
               </ListItemIcon>
-              {123}
-            </React.Fragment>
+              {comments}
+            </>
           }
         />
       </ListItem>

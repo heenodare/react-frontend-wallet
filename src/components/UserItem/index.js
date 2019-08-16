@@ -4,32 +4,34 @@ import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
+import { navigate } from 'gatsby'
 
 export default function UserItem(item) {
-  const { value } = item
+  const { userName, followers, mostActive, lastJoined, avatarUrl } = item.item
 
   return (
     <>
       <ListItem
         alignItems="flex-start"
         button
-        onClick={() => console.log('test')}
+        onClick={() =>
+          navigate('/profile', {
+            state: item.item,
+          })
+        }
       >
         <ListItemAvatar>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"
-          />
+          <Avatar src={avatarUrl} />
         </ListItemAvatar>
         <ListItemText
-          primary="User Name"
+          primary={userName}
           secondary={
             <React.Fragment>
-              {value.key} {'followers'}
+              {followers} {'followers'}
               <br />
-              {'Most Active Group - ADA '}
+              {'Most Active Group - '} {mostActive}
               <br />
-              {'Last Joined CHat - BTC'}
+              {'Last Joined Chat - '} {lastJoined}
             </React.Fragment>
           }
         />

@@ -29,13 +29,9 @@ export default function SwitchListSecondary() {
       <List className={classes.root}>
         <Grid container justify="center" alignItems="center">
           <ListItem>
-            <ListItemText
-              id="switch-list-label-darkMode"
-              primary="User Name Here"
-            />
+            <ListItemText id="switch-list-label-darkMode" primary="LouLouDev" />
           </ListItem>
           <Avatar
-            alt="Remy Sharp"
             src="https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"
             className={classes.bigAvatar}
           />
@@ -50,7 +46,7 @@ export default function SwitchListSecondary() {
         <ListItem>
           <ListItemText
             id="switch-list-label-darkMode"
-            primary="It is my personal Bio"
+            primary="My mission is to create a transparent, community owned rating system and platform for people to exchange their opinion among everything."
           />
         </ListItem>
       </List>
@@ -59,7 +55,18 @@ export default function SwitchListSecondary() {
         subheader={<ListSubheader>Most Liked Comment</ListSubheader>}
         className={classes.root}
       >
-        <CommentItem key={1} value={{ key: 1 }} />
+        <CommentItem
+          key={1}
+          item={{
+            key: 1,
+            message: " Why don'y you just buy a lot of ADA?",
+            title: 'ADA',
+            upvotes: 912351,
+            downvotes: 76,
+            avatarUrl:
+              'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
+          }}
+        />
       </List>
     </>
   )
