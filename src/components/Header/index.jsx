@@ -1,14 +1,16 @@
 import React from 'react'
 
+import InputBase from '@material-ui/core/InputBase'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import SearchIcon from '@material-ui/icons/Search'
 import { navigate } from 'gatsby'
+import Avatar from '@material-ui/core/Avatar'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -109,10 +111,24 @@ export default function PrimarySearchAppBar() {
     <>
       <AppBar position="sticky">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Heenodare
-          </Typography>
+          <Avatar
+            style={{ marginRight: 10 }}
+            src="https://avatars3.githubusercontent.com/u/53857129?s=400&u=9d891a2c20c247d98b5d9c391f5e0f9ca4f52184&v=4"
+          />
           <div className={classes.grow} />
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
           <IconButton
             edge="end"
             aria-label="account of current user"

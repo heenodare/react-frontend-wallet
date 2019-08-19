@@ -1,6 +1,5 @@
 import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
@@ -11,39 +10,47 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from 'gatsby'
 
 export default function ChatItem(item) {
-  const { value } = item
+  const {
+    title,
+    lastMessage,
+    upvotes,
+    downvotes,
+    comments,
+    avatarUrl,
+  } = item.item
   return (
-    <>
-      <ListItem alignItems="center" button onClick={() => navigate('/chat')}>
+    <ListItem
+      style={{ flexDirection: 'column' }}
+      alignItems="center"
+      button
+      divider
+      onClick={() => navigate('/chat')}
+    >
+      <ListItem>
         <ListItemAvatar>
-          <Avatar
-            alt="avator"
-            src="https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"
-          />
+          <Avatar alt="avator" src={avatarUrl} />
         </ListItemAvatar>
         <ListItemText
-          primary={<React.Fragment>Chat Title</React.Fragment>}
-          secondary={
-            <React.Fragment>
-              {' I am the lateset message........'}
-              <br />
-              <ListItemIcon>
-                <ThumbUp />
-              </ListItemIcon>
-              {value.key}
-              <ListItemIcon>
-                <ThumbDown />
-              </ListItemIcon>
-              {value.key}
-              <ListItemIcon>
-                <Comment />
-              </ListItemIcon>
-              {123}
-            </React.Fragment>
-          }
+          primary={<React.Fragment>{title}</React.Fragment>}
+          secondary={<>{lastMessage}</>}
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
+      <ListItem>
+        <ListItemIcon>
+          <ThumbUp />
+          {upvotes}
+        </ListItemIcon>
+
+        <ListItemIcon>
+          <ThumbDown />
+          {downvotes}
+        </ListItemIcon>
+
+        <ListItemIcon>
+          <Comment />
+          {comments}
+        </ListItemIcon>
+      </ListItem>
+    </ListItem>
   )
 }

@@ -72,7 +72,7 @@ export default function FullWidthTabs() {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <Tab label="Chat" {...a11yProps(0)} />
+          <Tab label="My Chat" {...a11yProps(0)} />
           <Tab label="Trending" {...a11yProps(1)} />
           <Tab label="User" {...a11yProps(2)} />
           <Tab label="Comment" {...a11yProps(3)} />
