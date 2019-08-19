@@ -10,11 +10,23 @@ import ChatContent from 'components/ChatContent'
 import UserList from 'components/UserList'
 import CommentList from 'components/CommentList'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    flexGrow: 1,
+  },
+  yellow: {
+    backgroundColor: 'yellow',
+    minHeight: 500,
+  },
+}))
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props
-
+  const classes = useStyles()
   return (
     <Typography
+      className={classes.typo}
       component="span"
       role="tabpanel"
       hidden={value !== index}
@@ -40,15 +52,7 @@ function a11yProps(index) {
   }
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    flexGrow: 1,
-  },
-}))
-
 export default function FullWidthTabs() {
-  const classes = useStyles()
   const theme = useTheme()
   const [value, setValue] = React.useState(0)
 
@@ -61,7 +65,8 @@ export default function FullWidthTabs() {
   }
 
   return (
-    <div className={classes.root}>
+    // <div className={classes.root}>
+    <>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -71,15 +76,16 @@ export default function FullWidthTabs() {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <Tab label="Disscusion" {...a11yProps(0)} />
-          <Tab label="User" {...a11yProps(1)} />
-          <Tab label="Most Liked" {...a11yProps(2)} />
+          <Tab label="Disscusion" {...a11yProps(0)} wrapped />
+          <Tab label="User" {...a11yProps(1)} wrapped />
+          <Tab label="Most Liked" {...a11yProps(2)} wrapped />
         </Tabs>
       </AppBar>
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
         onChangeIndex={handleChangeIndex}
+        containerStyle={{ height: '100%' }}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <ChatContent />
@@ -91,6 +97,7 @@ export default function FullWidthTabs() {
           <CommentList />
         </TabPanel>
       </SwipeableViews>
-    </div>
+    </>
+    // </div>
   )
 }

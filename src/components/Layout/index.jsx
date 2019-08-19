@@ -12,7 +12,7 @@ const Layout = ({ children }) => (
     <>
       <GlobalStyles />
       <Header siteTitle={config.siteTitle || config.siteTitleAlt} />
-      <div style={{ paddingBottom: 50 }}>{children}</div>
+      <div style={{ minHeight: '100vh' }}>{children}</div>
       <Footer />
     </>
   </ThemeProvider>

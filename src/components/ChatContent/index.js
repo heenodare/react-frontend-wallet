@@ -1,48 +1,74 @@
 import React from 'react'
-import { MessageList } from 'react-chat-elements'
-import 'react-chat-elements/dist/main.css'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}))
 export default function AlignItemsList() {
+  const classes = useStyles()
   return (
     <>
-      <MessageList
-        className="message-list"
-        lockable
-        downButton
-        downButtonBadge
-        dataSource={[
-          {
-            position: 'right',
-            type: 'text',
-            text: 'How is BTC right now?',
-            date: new Date(),
-          },
-          {
-            position: 'left',
-            type: 'text',
-            text: 'very good!',
-            date: new Date(),
-          },
-          {
-            position: 'right',
-            type: 'text',
-            text: 'How is BTC right now?',
-            date: new Date(),
-          },
-          {
-            position: 'left',
-            type: 'text',
-            text: 'very good!',
-            date: new Date(),
-          },
-          {
-            position: 'right',
-            type: 'text',
-            text: 'How is BTC right now?',
-            date: new Date(),
-          },
-        ]}
-      />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Grid item xs={6}>
+            <Paper className={classes.paper}>xs=12</Paper>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+      </Grid>
     </>
   )
 }

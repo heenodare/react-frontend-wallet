@@ -11,7 +11,7 @@ const Layout = ({ children }) => (
     <>
       <GlobalStyles />
       <ChatHeader siteTitle={config.siteTitle || config.siteTitleAlt} />
-      <div style={{ paddingBottom: 60 }}>{children}</div>
+      <div style={{ minHeight: '100vh' }}>{children}</div>
       <ChatInput />
     </>
   </ThemeProvider>

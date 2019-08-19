@@ -38,18 +38,16 @@ export default function ChatItem(item) {
       <ListItem>
         <ListItemIcon>
           <ThumbUp />
-          {upvotes}
         </ListItemIcon>
-
+        {upvotes}
         <ListItemIcon>
           <ThumbDown />
-          {downvotes}
         </ListItemIcon>
-
+        {downvotes}
         <ListItemIcon>
           <Comment />
-          {comments}
         </ListItemIcon>
+        {comments}
       </ListItem>
     </ListItem>
   )
