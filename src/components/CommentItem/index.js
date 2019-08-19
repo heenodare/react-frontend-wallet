@@ -35,12 +35,12 @@ export default function CommentItem(item) {
       <ListItem>
         <ListItemIcon>
           <ThumbUp />
-          {upvotes}
         </ListItemIcon>
+        {upvotes}
         <ListItemIcon>
           <ThumbDown />
-          {downvotes}
         </ListItemIcon>
+        {downvotes}
       </ListItem>
     </ListItem>
   )

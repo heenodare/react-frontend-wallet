@@ -16,7 +16,6 @@ const useStyles = makeStyles({
     width: '100%',
   },
   appBar: {
-    position: 'fixed',
     top: 'auto',
     bottom: 0,
   },
