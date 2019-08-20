@@ -15,10 +15,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     flexGrow: 1,
   },
-  yellow: {
-    backgroundColor: 'yellow',
-    minHeight: 500,
-  },
 }))
 
 function TabPanel(props) {
