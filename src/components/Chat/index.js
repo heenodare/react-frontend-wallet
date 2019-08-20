@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography'
 import ChatContent from 'components/ChatContent'
 import UserList from 'components/UserList'
 import CommentList from 'components/CommentList'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Toolbar from '@material-ui/core/Toolbar'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,6 +50,22 @@ function a11yProps(index) {
   }
 }
 
+function ElevationScroll(props) {
+  const { children, window } = props
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  })
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  })
+}
+
 export default function FullWidthTabs() {
   const theme = useTheme()
   const [value, setValue] = React.useState(0)
@@ -63,20 +81,23 @@ export default function FullWidthTabs() {
   return (
     // <div className={classes.root}>
     <>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
-        >
-          <Tab label="Disscusion" {...a11yProps(0)} wrapped />
-          <Tab label="User" {...a11yProps(1)} wrapped />
-          <Tab label="Most Liked" {...a11yProps(2)} wrapped />
-        </Tabs>
-      </AppBar>
+      <ElevationScroll>
+        <AppBar style={{ marginTop: 60 }} color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            <Tab label="Disscusion" {...a11yProps(0)} wrapped />
+            <Tab label="User" {...a11yProps(1)} wrapped />
+            <Tab label="Most Liked" {...a11yProps(2)} wrapped />
+          </Tabs>
+        </AppBar>
+      </ElevationScroll>
+      <Toolbar />
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
