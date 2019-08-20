@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Popper from '@material-ui/core/Popper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
+import Divider from '@material-ui/core/Divider'
 import Grow from '@material-ui/core/Grow'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 
@@ -14,16 +15,17 @@ Message.propTypes = {
   timeStamp: PropTypes.number.isRequired,
   address: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  type: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   data: PropTypes.string,
   ReplyTo: PropTypes.number.isRequired,
   isSigned: PropTypes.bool.isRequired,
   isOnChain: PropTypes.bool.isRequired,
+  position: PropTypes.string.isRequired,
 }
 
 Message.defaultProps = {
-  data: '123',
+  data: 'no data',
 }
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: 'right',
     color: theme.palette.text.primary,
   },
 }))
@@ -48,7 +50,9 @@ export default function Message(props) {
     ReplyTo,
     isOnChain,
     isSigned,
+    position,
   } = props
+  const self = address ? true : false
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
@@ -111,12 +115,12 @@ export default function Message(props) {
   }
 
   switch (type) {
-    case 0:
+    case 'text':
       return (
-        <>
+        <Grid container spacing={1}>
           <Grid item xs={12}>
             <div
-              style={{ float: 'right' }}
+              style={{ float: position, maxWidth: '70vh' }}
               role="presentation"
               onClick={handleToggle}
               onKeyPress={() => {}}
@@ -130,9 +134,6 @@ export default function Message(props) {
                 >
                   {message}
                 </Typography>
-                <React.Fragment>
-                  {address} {tags} {data} {ReplyTo} {isOnChain} {isSigned}
-                </React.Fragment>
                 <Typography
                   variant="caption"
                   display="inline"
@@ -146,7 +147,79 @@ export default function Message(props) {
             </div>
           </Grid>
           {PoperMenu()}
-        </>
+        </Grid>
+      )
+    case 'image':
+      return (
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <div
+              style={{ float: position, maxWidth: '50vh' }}
+              role="presentation"
+              onClick={handleToggle}
+              onKeyPress={() => {}}
+              ref={anchorRef}
+            >
+              <Paper className={classes.paper}>
+                <img src={data} alt={message} />
+                <Divider />
+                <Typography
+                  variant="body2"
+                  display="inline"
+                  style={{ paddingRight: 10 }}
+                >
+                  {message}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  gutterBottom
+                  align="right"
+                  style={{ fontSize: 10, color: 'grey' }}
+                >
+                  {timeDifference(timeStamp)}
+                </Typography>
+              </Paper>
+            </div>
+          </Grid>
+          {PoperMenu()}
+        </Grid>
+      )
+    case 'youtube':
+      return (
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <div
+              style={{ float: position, maxWidth: '70vh' }}
+              role="presentation"
+              onClick={handleToggle}
+              onKeyPress={() => {}}
+              ref={anchorRef}
+            >
+              <Paper className={classes.paper}>
+                <iframe width="420" height="345" src={data} />
+                <Divider />
+                <Typography
+                  variant="body2"
+                  display="inline"
+                  style={{ paddingRight: 10 }}
+                >
+                  {message}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  gutterBottom
+                  align="right"
+                  style={{ fontSize: 10, color: 'grey' }}
+                >
+                  {timeDifference(timeStamp)}
+                </Typography>
+              </Paper>
+            </div>
+          </Grid>
+          {PoperMenu()}
+        </Grid>
       )
     default:
       return <></>
