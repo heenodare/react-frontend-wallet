@@ -9,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import MoreIcon from '@material-ui/icons/MoreVert'
-import { navigate } from 'gatsby'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -112,7 +111,7 @@ export default function PrimarySearchAppBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="go back"
-            onClick={() => navigate('/')}
+            onClick={() => window.history.back()}
           >
             <ArrowBack />
           </IconButton>
