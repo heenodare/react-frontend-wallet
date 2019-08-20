@@ -1,14 +1,13 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
 import ChatMessage from 'components/ChatMessage'
 import Infinite from 'react-infinite'
 
 export default function AlignItemsList() {
   function MessageList(items) {
-    return items.map((item, i) => {
+    return items.map(item => {
       return (
         <ChatMessage
-          key={i}
+          key={Math.random()}
           timeStamp={item.timeStamp}
           address={item.address}
           tags={item.tags}

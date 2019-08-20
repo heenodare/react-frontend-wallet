@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ChatItem from 'components/ChatItem'
 import ListSubheader from '@material-ui/core/ListSubheader'
-import Divider from '@material-ui/core/Divider'
 
 const useStyles = makeStyles(theme => ({
   root: {

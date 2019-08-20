@@ -52,7 +52,6 @@ export default function Message(props) {
     isSigned,
     position,
   } = props
-  const self = address ? true : false
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
@@ -197,7 +196,12 @@ export default function Message(props) {
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <iframe width="420" height="345" src={data} />
+                <iframe
+                  title="youtube video"
+                  width="420"
+                  height="345"
+                  src={data}
+                />
                 <Divider />
                 <Typography
                   variant="body2"
@@ -222,6 +226,14 @@ export default function Message(props) {
         </Grid>
       )
     default:
-      return <></>
+      return (
+        <>
+          {tags}
+          {ReplyTo}
+          {isOnChain}
+          {isSigned}
+          {address}
+        </>
+      )
   }
 }
