@@ -49,7 +49,6 @@ export default function AlignItemsList() {
           }}
         />
       </List>
-      <Divider />
       <List
         subheader={<ListSubheader>Recent Chat</ListSubheader>}
         className={classes.root}
