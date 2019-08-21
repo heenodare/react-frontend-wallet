@@ -104,6 +104,7 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>Edit</MenuItem>
                   <MenuItem onClick={handleClose}>Forward</MenuItem>
                   <MenuItem onClick={handleClose}>Delete</MenuItem>
+                  <MenuItem onClick={handleClose}>Join Chat</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

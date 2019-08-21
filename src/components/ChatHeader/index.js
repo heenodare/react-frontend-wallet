@@ -97,7 +97,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>some function 1</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Upper Branch</MenuItem>
       <MenuItem onClick={handleMenuClose}>some function 2</MenuItem>
     </Menu>
   )
