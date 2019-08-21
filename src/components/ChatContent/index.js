@@ -32,7 +32,9 @@ export default function AlignItemsList() {
     scrollToBottom()
   })
 
-  function loadFunc() {}
+  function loadFunc() {
+    console.log('123')
+  }
 
   return (
     <InfiniteScroll
