@@ -82,7 +82,7 @@ export default function FullWidthTabs() {
     // <div className={classes.root}>
     <>
       <ElevationScroll>
-        <AppBar style={{ marginTop: 55 }} color="default">
+        <AppBar style={{ marginTop: 56 }} color="default">
           <Tabs
             value={value}
             onChange={handleChange}
@@ -97,6 +97,7 @@ export default function FullWidthTabs() {
           </Tabs>
         </AppBar>
       </ElevationScroll>
+      <Toolbar />
       <Toolbar />
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}

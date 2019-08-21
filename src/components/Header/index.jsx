@@ -108,7 +108,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="fixed">
         <Toolbar>
           <Avatar
             style={{ marginRight: 10 }}

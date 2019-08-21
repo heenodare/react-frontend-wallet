@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import MoreIcon from '@material-ui/icons/MoreVert'
+import { navigate } from 'gatsby'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -97,14 +98,21 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Upper Branch</MenuItem>
-      <MenuItem onClick={handleMenuClose}>some function 2</MenuItem>
+      <MenuItem
+        onClick={() => {
+          navigate('/branches')
+          handleMenuClose()
+        }}
+      >
+        Branches
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>Filter</MenuItem>
     </Menu>
   )
 
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
