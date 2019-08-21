@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, createRef } from 'react'
 import ChatMessage from 'components/ChatMessage'
-import Infinite from 'react-infinite'
+import InfiniteScroll from 'react-infinite-scroller'
 
 export default function AlignItemsList() {
+  const messagesEnd = createRef()
+
   function MessageList(items) {
     return items.map(item => {
       return (
@@ -22,12 +24,28 @@ export default function AlignItemsList() {
       )
     })
   }
+  function scrollToBottom() {
+    messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  })
+
+  function loadFunc() {}
 
   return (
-    <Infinite
-      useWindowAsScrollContainer
-      elementHeight={300}
-      displayBottomUpwards
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={loadFunc}
+      hasMore={false}
+      loader={
+        <div className="loader" key={0}>
+          Loading ...
+        </div>
+      }
+      useWindow={false}
+      isReverse
     >
       {MessageList([
         {
@@ -118,6 +136,7 @@ export default function AlignItemsList() {
           position: 'left',
         },
       ])}
-    </Infinite>
+      <div style={{ float: 'left', clear: 'both' }} ref={messagesEnd} />
+    </InfiniteScroll>
   )
 }

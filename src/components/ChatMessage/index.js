@@ -104,6 +104,7 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>Edit</MenuItem>
                   <MenuItem onClick={handleClose}>Forward</MenuItem>
                   <MenuItem onClick={handleClose}>Delete</MenuItem>
+                  <MenuItem onClick={handleClose}>Join Chat</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -119,7 +120,7 @@ export default function Message(props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70vh' }}
+              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
               onKeyPress={() => {}}
@@ -153,14 +154,14 @@ export default function Message(props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '50vh' }}
+              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
               onKeyPress={() => {}}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <img src={data} alt={message} />
+                <img src={data} alt={message} style={{ maxHeight: 150 }} />
                 <Divider />
                 <Typography
                   variant="body2"
@@ -189,19 +190,14 @@ export default function Message(props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70vh' }}
+              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
               onKeyPress={() => {}}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <iframe
-                  title="youtube video"
-                  width="420"
-                  height="345"
-                  src={data}
-                />
+                <iframe title="youtube video" width="100%" src={data} />
                 <Divider />
                 <Typography
                   variant="body2"

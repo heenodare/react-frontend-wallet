@@ -82,7 +82,7 @@ export default function FullWidthTabs() {
     // <div className={classes.root}>
     <>
       <ElevationScroll>
-        <AppBar style={{ marginTop: 60 }} color="default">
+        <AppBar style={{ marginTop: 55 }} color="default">
           <Tabs
             value={value}
             onChange={handleChange}
