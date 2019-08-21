@@ -1,6 +1,5 @@
 import React from 'react'
 import ChatMessage from 'components/ChatMessage'
-import Infinite from 'react-infinite'
 
 export default function AlignItemsList() {
   function MessageList(items) {
@@ -24,11 +23,7 @@ export default function AlignItemsList() {
   }
 
   return (
-    <Infinite
-      useWindowAsScrollContainer
-      elementHeight={300}
-      displayBottomUpwards
-    >
+    <>
       {MessageList([
         {
           timeStamp: Math.trunc(Date.now() / 1000),
@@ -118,6 +113,6 @@ export default function AlignItemsList() {
           position: 'left',
         },
       ])}
-    </Infinite>
+    </>
   )
 }
