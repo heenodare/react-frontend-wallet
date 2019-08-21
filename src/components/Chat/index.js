@@ -98,6 +98,7 @@ export default function FullWidthTabs() {
         </AppBar>
       </ElevationScroll>
       <Toolbar />
+      <Toolbar />
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
