@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-styled",
+  "name": "heenodare",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby and styled-system",
+  "description": "the most decentralized public rating system",
   "version": "0.1.0",
-  "author": "Gregor Albrecht <hello@gregoralbrecht.com>",
+  "author": "louloudev",
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
     "@material-ui/core": "^4.3.1",
@@ -39,6 +39,7 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.2.0",
     "styled-system": "^4.1.0",
+    "typescript": "^3.5.3",
     "typography": "^0.16.19"
   },
   "keywords": [
