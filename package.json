@@ -1,9 +1,9 @@
 {
   "name": "heenodare",
   "private": true,
-  "description": "the most decentralized public rating system",
+  "description": "a decentralized public rating system",
   "version": "0.1.0",
-  "author": "louloudev",
+  "author": "louloudev<louloudevelop@gmail.com>",
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
     "@material-ui/core": "^4.3.1",
@@ -63,7 +63,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "gatsby-plugin-tslint": "^0.0.2",
     "husky": "^1.3.1",
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",
@@ -71,9 +70,7 @@
     "stylelint-config-recommended": "^2.2.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.6.0",
-    "tslint": "^5.19.0",
-    "tslint-loader": "^3.5.4"
+    "stylelint-processor-styled-components": "^1.6.0"
   },
   "husky": {
     "hooks": {
@@ -83,9 +80,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gregoralbrecht/gatsby-starter-styled"
+    "url": "https://github.com/heenodare/react-frontend-wallet"
   },
   "bugs": {
-    "url": "https://github.com/gregoralbrecht/gatsby-starter-styled/issues"
+    "url": "https://github.com/heenodare/react-frontend-wallet/issues"
   }
 }
