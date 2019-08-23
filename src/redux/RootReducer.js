@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import footer from '../components/Footer/reducer'
-import chatData from '../util/setCurrentChat/reducer'
+import footer from './Footer/reducer'
+import chatData from './Chat/reducer'
 
 export default combineReducers({ footer, chatData })

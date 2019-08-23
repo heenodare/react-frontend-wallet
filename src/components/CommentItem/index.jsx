@@ -8,7 +8,7 @@ import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from 'gatsby'
 import { connect } from 'react-redux'
-import { setCurrentChat } from '../../util/setCurrentChat/action'
+import { setCurrentChat } from '../../redux/Chat/action'
 
 const mapStateToProps = state => {
   return {

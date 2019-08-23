@@ -9,7 +9,7 @@ import FindReplace from '@material-ui/icons/FindReplace'
 import AppBar from '@material-ui/core/AppBar'
 import { navigate } from 'gatsby'
 import { connect } from 'react-redux'
-import { setCurrentPage } from './action'
+import { setCurrentPage } from '../../redux/Footer/action'
 
 const useStyles = makeStyles({
   root: {
