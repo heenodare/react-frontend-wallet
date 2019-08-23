@@ -25,7 +25,7 @@ export default function AlignItemsList() {
     })
   }
   function scrollToBottom() {
-    messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
+    messagesEnd.current.scrollIntoView({ alignToTop: false })
   }
 
   useEffect(() => {

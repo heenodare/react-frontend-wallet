@@ -7,7 +7,7 @@ import Comment from '@material-ui/icons/Comment'
 import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import { navigate } from 'gatsby'
+import { navigate } from '@reach/router'
 import { connect } from 'react-redux'
 import { setCurrentChat } from '../../redux/Chat/action'
 
@@ -35,6 +35,7 @@ function ChatItem(item) {
     avatarUrl,
   } = item.item
   const { setCurrentChatConnect } = item
+
   return (
     <ListItem
       style={{ flexDirection: 'column' }}
@@ -42,8 +43,8 @@ function ChatItem(item) {
       button
       divider
       onClick={() => {
-        setCurrentChatConnect({ title, id: 0 })
-        navigate('/chat')
+        setCurrentChatConnect({ title, id: Math.random() })
+        navigate(`/chat`)
       }}
     >
       <ListItem>

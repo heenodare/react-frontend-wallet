@@ -10,6 +10,8 @@ import MenuList from '@material-ui/core/MenuList'
 import Divider from '@material-ui/core/Divider'
 import Grow from '@material-ui/core/Grow'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import ThumbUp from '@material-ui/icons/ThumbUp'
+import ThumbDown from '@material-ui/icons/ThumbDown'
 
 Message.propTypes = {
   timeStamp: PropTypes.number.isRequired,
@@ -104,7 +106,16 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>Edit</MenuItem>
                   <MenuItem onClick={handleClose}>Forward</MenuItem>
                   <MenuItem onClick={handleClose}>Delete</MenuItem>
+                  <Divider />
                   <MenuItem onClick={handleClose}>Join Chat</MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <ThumbUp />
+                    Like
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <ThumbDown />
+                    Dislike
+                  </MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
