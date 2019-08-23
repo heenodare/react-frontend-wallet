@@ -5,7 +5,6 @@ module.exports = {
     siteUrl: config.siteUrl,
   },
   plugins: [
-    'gatsby-plugin-tslint',
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     {

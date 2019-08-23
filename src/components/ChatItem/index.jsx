@@ -8,8 +8,24 @@ import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from 'gatsby'
+import { connect } from 'react-redux'
+import { setCurrentChat } from '../../util/setCurrentChat/action'
 
-export default function ChatItem(item) {
+const mapStateToProps = state => {
+  return {
+    CurrentChat: state.chatData.CurrentChat,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentChatConnect: chatitem => {
+      dispatch(setCurrentChat(chatitem))
+    },
+  }
+}
+
+function ChatItem(item) {
   const {
     title,
     lastMessage,
@@ -18,13 +34,17 @@ export default function ChatItem(item) {
     comments,
     avatarUrl,
   } = item.item
+  const { setCurrentChatConnect } = item
   return (
     <ListItem
       style={{ flexDirection: 'column' }}
       alignItems="center"
       button
       divider
-      onClick={() => navigate('/chat')}
+      onClick={() => {
+        setCurrentChatConnect({ title, id: 0 })
+        navigate('/chat')
+      }}
     >
       <ListItem>
         <ListItemAvatar>
@@ -52,3 +72,8 @@ export default function ChatItem(item) {
     </ListItem>
   )
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChatItem)
