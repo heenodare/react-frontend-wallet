@@ -74,8 +74,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn lint:styles",
-      "pre-push": "yarn lint:scripts"
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
     }
   },
   "repository": {
