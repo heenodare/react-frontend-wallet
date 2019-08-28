@@ -2,6 +2,7 @@
 .cache
 node_modules
 yarn-error.log
+*.lock
 
 # Build directory
 public
@@ -10,3 +11,8 @@ public
 # Environment variables
 .env.*
 !.env.example
+
+#Linting
+.eslintrc
+.prettierrc
+.stylelintrc
