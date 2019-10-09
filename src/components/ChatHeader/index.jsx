@@ -70,13 +70,13 @@ function ChatHeader(props) {
       >
         Branches
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>Filter</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Filter</MenuItem> */}
     </Menu>
   )
 
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             edge="start"

@@ -29,7 +29,7 @@ export default function AlignItemsList() {
   }
 
   useEffect(() => {
-    scrollToBottom()
+    // scrollToBottom()
   })
 
   function loadFunc() {

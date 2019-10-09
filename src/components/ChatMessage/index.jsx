@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'right',
+    textAlign: 'left',
     color: theme.palette.text.primary,
   },
 }))
@@ -106,7 +106,7 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>Edit</MenuItem>
                   <MenuItem onClick={handleClose}>Forward</MenuItem>
                   <MenuItem onClick={handleClose}>Delete</MenuItem>
-                  <Divider />
+                  {/* <Divider />
                   <MenuItem onClick={handleClose}>Join Chat</MenuItem>
                   <MenuItem onClick={handleClose}>
                     <ThumbUp />
@@ -115,7 +115,7 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>
                     <ThumbDown />
                     Dislike
-                  </MenuItem>
+                  </MenuItem> */}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -131,28 +131,36 @@ export default function Message(props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
+              style={{ float: position, minWidth: '100%', maxWidth:'100%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
               onKeyPress={() => {}}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
+              <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 14 }}
+                >
+                  {address}
+              </Typography>
+              <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 10, color: 'grey' , paddingLeft: 10}}
+                >
+                  {timeDifference(timeStamp)}
+                </Typography>
+                <Divider />
                 <Typography
                   variant="body2"
                   display="inline"
                   style={{ paddingRight: 10 }}
                 >
                   {message}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  gutterBottom
-                  align="right"
-                  style={{ fontSize: 10, color: 'grey' }}
-                >
-                  {timeDifference(timeStamp)}
                 </Typography>
               </Paper>
             </div>
@@ -165,31 +173,38 @@ export default function Message(props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
+              style={{ float: position, minWidth:'100%', maxWidth: '100%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
               onKeyPress={() => {}}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <img src={data} alt={message} style={{ maxHeight: 150 }} />
+              <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 14 }}
+                >
+                  {address}
+              </Typography>
+              <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 10, color: 'grey' , paddingLeft: 10}}
+                >
+                  {timeDifference(timeStamp)}
+                </Typography>
                 <Divider />
                 <Typography
                   variant="body2"
-                  display="inline"
+                  display="block"
                   style={{ paddingRight: 10 }}
                 >
                   {message}
                 </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  gutterBottom
-                  align="right"
-                  style={{ fontSize: 10, color: 'grey' }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
+                <img src={data} alt={message} style={{ maxHeight: 150 }} />
               </Paper>
             </div>
           </Grid>

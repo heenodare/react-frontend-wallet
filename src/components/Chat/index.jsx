@@ -81,40 +81,7 @@ export default function FullWidthTabs() {
   return (
     // <div className={classes.root}>
     <>
-      <ElevationScroll>
-        <AppBar style={{ marginTop: 56 }} color="default">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-          >
-            <Tab label="Disscusion" {...a11yProps(0)} wrapped />
-            <Tab label="User" {...a11yProps(1)} wrapped />
-            <Tab label="Most Liked" {...a11yProps(2)} wrapped />
-          </Tabs>
-        </AppBar>
-      </ElevationScroll>
-      <Toolbar />
-      <Toolbar />
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-        containerStyle={{ height: '100%' }}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
           <ChatContent />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <UserList />
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          <CommentList />
-        </TabPanel>
-      </SwipeableViews>
     </>
     // </div>
   )
