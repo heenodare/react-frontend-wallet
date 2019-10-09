@@ -124,19 +124,7 @@ export default function AlignItemsList() {
           isSigned: true,
           isOnChain: true,
           position: 'right',
-        },
-        {
-          timeStamp: Math.trunc(Date.now() / 1000),
-          address: 'asdasdascs',
-          tags: ['fun', 'chat'],
-          type: 'youtube',
-          data: 'https://www.youtube.com/embed/un8FAjXWOBY',
-          message: 'This is a youtube message with text',
-          ReplyTo: 123123712,
-          isSigned: true,
-          isOnChain: true,
-          position: 'left',
-        },
+        }
       ])}
       <div style={{ float: 'left', clear: 'both' }} ref={messagesEnd} />
     </InfiniteScroll>

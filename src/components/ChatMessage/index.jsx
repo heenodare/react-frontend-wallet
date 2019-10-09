@@ -10,8 +10,6 @@ import MenuList from '@material-ui/core/MenuList'
 import Divider from '@material-ui/core/Divider'
 import Grow from '@material-ui/core/Grow'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import ThumbUp from '@material-ui/icons/ThumbUp'
-import ThumbDown from '@material-ui/icons/ThumbDown'
 
 Message.propTypes = {
   timeStamp: PropTypes.number.isRequired,
@@ -205,42 +203,6 @@ export default function Message(props) {
                   {message}
                 </Typography>
                 <img src={data} alt={message} style={{ maxHeight: 150 }} />
-              </Paper>
-            </div>
-          </Grid>
-          {PoperMenu()}
-        </Grid>
-      )
-    case 'youtube':
-      return (
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <div
-              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
-              role="presentation"
-              onClick={handleToggle}
-              onKeyPress={() => {}}
-              ref={anchorRef}
-            >
-              <Paper className={classes.paper}>
-                <iframe title="youtube video" width="100%" src={data} />
-                <Divider />
-                <Typography
-                  variant="body2"
-                  display="inline"
-                  style={{ paddingRight: 10 }}
-                >
-                  {message}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  gutterBottom
-                  align="right"
-                  style={{ fontSize: 10, color: 'grey' }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
               </Paper>
             </div>
           </Grid>
