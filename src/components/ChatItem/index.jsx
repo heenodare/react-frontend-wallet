@@ -9,12 +9,31 @@ import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from '@reach/router'
 
+const timeDifference = time => {
+  const sPerMinute = 60
+  const sPerHour = sPerMinute * 60
+  const sPerDay = sPerHour * 24
+  const now = Math.trunc(Date.now() / 1000)
+  const elapsed = now - time
+  if (elapsed < sPerMinute) {
+    return `${Math.round(elapsed)} seconds ago`
+  }
+  if (elapsed < sPerHour) {
+    return `${Math.round(elapsed / sPerMinute)} minutes ago`
+  }
+  if (elapsed < sPerDay) {
+    return `${Math.round(elapsed / sPerHour)} hours ago`
+  }
+  return new Date(time * 1000).toLocaleDateString()
+}
 
 function ChatItem(item) {
   const {
     ID,
     text,
     count,
+    time,
+    address,
     avatarUrl,
   } = item.item
   return (
@@ -28,12 +47,12 @@ function ChatItem(item) {
       }}
     >
       <ListItem>
-        <ListItemAvatar>
-          <Avatar alt="avator" src={"https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"} />
-        </ListItemAvatar>
         <ListItemText
-          primary={<React.Fragment>{text}</React.Fragment>}
-          // secondary={<>{lastMessage}</>}
+          primary={<React.Fragment>{"#"+ID+"  "+text}</React.Fragment>}
+          secondary={<>
+          {address}
+          {"     .     "}
+          {timeDifference(time)}</>}
         />
       </ListItem>
       <ListItem>

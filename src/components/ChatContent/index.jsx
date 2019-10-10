@@ -5,6 +5,10 @@ import * as dgraph from 'dgraph-js-http'
 import omit from 'object.omit';
 import { connect } from 'react-redux'
 import { setCurrentChat } from '../../redux/Chat/action'
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AddIcon from '@material-ui/icons/Add';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const mapStateToProps = state => {
   return {
@@ -30,15 +34,18 @@ export default connect(
 function ChatContent(props) {
   const messagesEnd = createRef()
   const [messages, setMessages] = React.useState([])
+  const [loading, setLoading] = React.useState(true)
   const [, updateState] = React.useState();
   const forceUpdate = useCallback(() => updateState({}), []);
-  const { setCurrentChatConnect } = props
+  const { setCurrentChatConnect, CurrentChat } = props
+  const [End, setEnd] = React.useState(10)
 
   function MessageList(items) {
     return items.map(item => {
       return (
         <ChatMessage
           key={item.ID}
+          ID={item.ID}
           timeStamp={item.time}
           address={item.address}
           tags={item.tags}
@@ -68,6 +75,7 @@ function ChatContent(props) {
 
   function RefreshMessages(){
     setCurrentChatConnect({ title: "Loading", id: -1 })
+    setLoading(true)
     setMessages([])
     const urlParams = new URLSearchParams(window.location.search);
     const clientStub = new dgraph.DgraphClientStub(
@@ -95,13 +103,13 @@ function ChatContent(props) {
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       const re = res.data;
       var root = re.getMessages[0];
-      setCurrentChatConnect({ title: root.text, id: root.ID })
       MessagesToArray(root)
       var tmpMessages = messages;
-      tmpMessages.sort((a, b) => (a.time > b.time) ? 1 : -1)
+      tmpMessages.sort((a, b) => (a.time > b.time) ? -1 : 1)
+      setCurrentChatConnect({ title: root.text, id: root.ID })
       setMessages(tmpMessages)
       // console.log(messages)
-      forceUpdate()
+      setLoading(false)
     })
   }
 
@@ -109,24 +117,51 @@ function ChatContent(props) {
     RefreshMessages()
   },[])
 
-
+  if(loading){
+    return(
+      <div>
+      <CircularProgress style={{marginTop: 100 ,margin: "0 auto", display: "block"}} color="secondary" />
+      </div>
+    )
+  }
+  else{
   return (
     // <InfiniteScroll
     //   pageStart={0}
-    //   loadMore={loadFunc}
-    //   hasMore={false}
+    //   loadMore={()=>{
+    //     if(loading){
+    //       return
+    //     }
+    //     setLoading(true)
+    //     if(!loading){
+    //     console.log("reach end")
+    //     End += 10;
+    //     }
+    //   }}
+    //   hasMore={true}
     //   loader={
     //     <div className="loader" key={0}>
     //       Loading ...
     //     </div>
     //   }
-    //   useWindow={false}
+    //   useWindow={true}
     //   // isReverse
     // >
-    <>
-      {MessageList(messages)}
-      </>
-      // <div style={{ float: 'left', clear: 'both' }} ref={messagesEnd} />
+    <> 
+      {MessageList(messages.slice(0, End))}
+      <ListItem
+          button
+          onClick={() => {
+            setEnd(End+10)
+          }}
+        >
+          <ListItemIcon style={{marginTop: 10,margin: "0 auto", display: "block"}}>
+            <AddIcon />
+          </ListItemIcon>
+        </ListItem>
+    </>
+      /* <div style={{ float: 'left', clear: 'both' }} ref={messagesEnd} /> */
     // </InfiniteScroll>
   )
+  }
 }

@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Message(props) {
   const {
+    ID,
     type,
     timeStamp,
     message,
@@ -139,7 +140,7 @@ export default function Message(props) {
                   align="left"
                   style={{ fontSize: 14 }}
                 >
-                  {address}
+                  {"#"+ID+" "+address}
               </Typography>
               <Typography
                   variant="caption"

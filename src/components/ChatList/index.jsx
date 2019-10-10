@@ -36,6 +36,8 @@ export default function AlignItemsList() {
         {
           ID,
           text,
+          time,
+          address,
           count: count(~replyTo)
         }
       }  
