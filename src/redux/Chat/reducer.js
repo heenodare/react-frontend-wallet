@@ -1,5 +1,5 @@
 const initialState = {
-  CurrentChat: { title: 'Unknown', id: 0 },
+  CurrentChat: { title: 'Loading', id: -1 },
 }
 
 export default function(state = initialState, action) {

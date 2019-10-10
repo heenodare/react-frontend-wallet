@@ -8,34 +8,15 @@ import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from '@reach/router'
-import { connect } from 'react-redux'
-import { setCurrentChat } from '../../redux/Chat/action'
 
-const mapStateToProps = state => {
-  return {
-    CurrentChat: state.chatData.CurrentChat,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentChatConnect: chatitem => {
-      dispatch(setCurrentChat(chatitem))
-    },
-  }
-}
 
 function ChatItem(item) {
   const {
-    title,
-    lastMessage,
-    upvotes,
-    downvotes,
-    comments,
+    ID,
+    text,
+    count,
     avatarUrl,
   } = item.item
-  const { setCurrentChatConnect } = item
-
   return (
     <ListItem
       style={{ flexDirection: 'column' }}
@@ -43,38 +24,34 @@ function ChatItem(item) {
       button
       divider
       onClick={() => {
-        setCurrentChatConnect({ title, id: Math.random() })
-        navigate(`/chat`)
+        navigate('/chat?id='+ID)
       }}
     >
       <ListItem>
         <ListItemAvatar>
-          <Avatar alt="avator" src={avatarUrl} />
+          <Avatar alt="avator" src={"https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg"} />
         </ListItemAvatar>
         <ListItemText
-          primary={<React.Fragment>{title}</React.Fragment>}
-          secondary={<>{lastMessage}</>}
+          primary={<React.Fragment>{text}</React.Fragment>}
+          // secondary={<>{lastMessage}</>}
         />
       </ListItem>
       <ListItem>
         <ListItemIcon>
           <ThumbUp />
         </ListItemIcon>
-        {upvotes}
+        0
         <ListItemIcon>
           <ThumbDown />
         </ListItemIcon>
-        {downvotes}
+        0
         <ListItemIcon>
           <Comment />
         </ListItemIcon>
-        {comments}
+        {count}
       </ListItem>
     </ListItem>
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChatItem)
+export default ChatItem

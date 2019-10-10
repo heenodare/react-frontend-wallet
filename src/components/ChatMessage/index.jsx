@@ -18,10 +18,7 @@ Message.propTypes = {
   type: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   data: PropTypes.string,
-  ReplyTo: PropTypes.number.isRequired,
-  isSigned: PropTypes.bool.isRequired,
-  isOnChain: PropTypes.bool.isRequired,
-  position: PropTypes.string.isRequired,
+  // ReplyTo: PropTypes.number.isRequired,
 }
 
 Message.defaultProps = {
@@ -214,9 +211,6 @@ export default function Message(props) {
         <>
           {tags}
           {ReplyTo}
-          {isOnChain}
-          {isSigned}
-          {address}
         </>
       )
   }

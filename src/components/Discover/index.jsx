@@ -71,10 +71,10 @@ export default function FullWidthTabs() {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <Tab label="My Chat" {...a11yProps(0)} />
-          <Tab label="Trending" {...a11yProps(1)} />
-          <Tab label="User" {...a11yProps(2)} />
-          <Tab label="Comment" {...a11yProps(3)} />
+          {/* <Tab label="My Chat" {...a11yProps(0)} /> */}
+          <Tab label="Latest" {...a11yProps(0)} />
+          <Tab label="User" {...a11yProps(1)} />
+          <Tab label="Comment" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -82,16 +82,16 @@ export default function FullWidthTabs() {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
+        {/* <TabPanel value={value} index={0} dir={theme.direction}>
+          <ChatList />
+        </TabPanel> */}
         <TabPanel value={value} index={0} dir={theme.direction}>
           <ChatList />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <ChatList />
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
           <UserList />
         </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
+        <TabPanel value={value} index={2} dir={theme.direction}>
           <CommentList />
         </TabPanel>
       </SwipeableViews>
