@@ -107,18 +107,15 @@ function ChatContent(props) {
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       const re = res.data;
       var root = re.getMessages[0];
-      console.log(root)
       var tmpMessages = messages;
       tmpMessages.push(omit(root, 'replys'));
       setMessages(tmpMessages);
       promises.push(MessagesToArray(root))
       Promise.all(promises).then(()=>{
-        console.log(messages)
         tmpMessages = messages;
         tmpMessages.sort((a, b) => (a.time > b.time) ? 1 : -1)
         setCurrentChatConnect({ title: root.text, id: root.ID })
         setMessages(tmpMessages)
-        // console.log(messages)
         setLoading(false)
       })
     })
@@ -163,7 +160,12 @@ function ChatContent(props) {
       <ListItem
           button
           onClick={() => {
+            if(End+10 > messages.length){
+              alert("No more new messages")
+            }
+            else{
             setEnd(End+10)
+            }
           }}
         >
           <ListItemIcon style={{paddingTop: 10,margin: "0 auto", display: "block"}}>

@@ -91,7 +91,7 @@ export default function Message(props) {
 
   function downloadtorrent() {
     setDownloading(true)
-    console.log("test" + ID);
+    // console.log("test" + ID);
     var torrentId = data
     //var torrentId = 'magnet:?xt=urn:btih:69aac798fafb9a98be9c621ab04bb59b1366e771&dn=bitcoin-kG--621x414%40LiveMint.jpg&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com'
     // var torrentId = 'magnet:?xt=urn:btih:eb919f2ec6fc08f9b9aff8e8ea14992d2c85caa5&dn=Screen+Recording+2019-10-11+at+3.18.50+PM.mov&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com'
