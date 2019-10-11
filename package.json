@@ -12,6 +12,7 @@
     "babel-plugin-styled-components": "^1.10.0",
     "bs58": "^4.0.1",
     "dgraph-js-http": "^1.1.0-rc18",
+    "drag-drop": "^5.0.1",
     "gatsby": "^2.3.22",
     "gatsby-image": "^2.0.38",
     "gatsby-plugin-catch-links": "^2.0.13",
@@ -42,7 +43,8 @@
     "styled-components": "^4.2.0",
     "styled-system": "^4.1.0",
     "typescript": "^3.5.3",
-    "typography": "^0.16.19"
+    "typography": "^0.16.19",
+    "webtorrent": "^0.107.16"
   },
   "keywords": [
     "gatsby"

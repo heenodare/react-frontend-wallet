@@ -32,7 +32,7 @@ export default function AlignItemsList() {
     const dgraphClient = new dgraph.DgraphClient(clientStub);
 
     const query = `{
-      latestChats(func: gt(count(~replyTo), 5) ,orderasc: time, first: 15)			
+      latestChats(func: gt(count(~replyTo), 5) ,orderdesc: time, first: 15)			
         {
           ID,
           text,

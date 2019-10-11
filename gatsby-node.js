@@ -16,5 +16,6 @@ exports.onCreateWebpackConfig = ({ actions }) => {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],
       alias: { 'react-dom': '@hot-loader/react-dom' },
     },
+    node: { fs: 'empty' },
   })
 }

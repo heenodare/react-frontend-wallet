@@ -10,6 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 const mapStateToProps = state => {
   return {
     CurrentChat: state.chatData.CurrentChat,
@@ -39,8 +40,10 @@ function ChatContent(props) {
   const forceUpdate = useCallback(() => updateState({}), []);
   const { setCurrentChatConnect, CurrentChat } = props
   const [End, setEnd] = React.useState(10)
+  var promises = [];
 
   function MessageList(items) {
+
     return items.map(item => {
       return (
         <ChatMessage
@@ -63,14 +66,15 @@ function ChatContent(props) {
   }
 
   function MessagesToArray(message) {
-    var tmpMessages = messages;
-    tmpMessages.push(omit(message, 'replys'));
-    setMessages(tmpMessages);
     message.replys.forEach((item, index)=>{
+      var tmpMessages = messages;
+      tmpMessages.push(omit(item, 'replys'));
+      setMessages(tmpMessages);
       if(item.replys != undefined){
-        MessagesToArray(item)
+        promises.push(MessagesToArray(item))
       }
     })
+    return Promise.resolve()
   }
 
   function RefreshMessages(){
@@ -103,13 +107,20 @@ function ChatContent(props) {
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       const re = res.data;
       var root = re.getMessages[0];
-      MessagesToArray(root)
+      console.log(root)
       var tmpMessages = messages;
-      tmpMessages.sort((a, b) => (a.time > b.time) ? -1 : 1)
-      setCurrentChatConnect({ title: root.text, id: root.ID })
-      setMessages(tmpMessages)
-      // console.log(messages)
-      setLoading(false)
+      tmpMessages.push(omit(root, 'replys'));
+      setMessages(tmpMessages);
+      promises.push(MessagesToArray(root))
+      Promise.all(promises).then(()=>{
+        console.log(messages)
+        tmpMessages = messages;
+        tmpMessages.sort((a, b) => (a.time > b.time) ? 1 : -1)
+        setCurrentChatConnect({ title: root.text, id: root.ID })
+        setMessages(tmpMessages)
+        // console.log(messages)
+        setLoading(false)
+      })
     })
   }
 
@@ -120,7 +131,7 @@ function ChatContent(props) {
   if(loading){
     return(
       <div>
-      <CircularProgress style={{marginTop: 100 ,margin: "0 auto", display: "block"}} color="secondary" />
+      <CircularProgress style={{margin: "0 auto", display: "block"}} color="secondary" />
       </div>
     )
   }
@@ -155,7 +166,7 @@ function ChatContent(props) {
             setEnd(End+10)
           }}
         >
-          <ListItemIcon style={{marginTop: 10,margin: "0 auto", display: "block"}}>
+          <ListItemIcon style={{paddingTop: 10,margin: "0 auto", display: "block"}}>
             <AddIcon />
           </ListItemIcon>
         </ListItem>
