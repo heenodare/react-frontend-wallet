@@ -14,8 +14,14 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export default function AlignItemsList(props) {
-  const {type} = props
+  const { type } = props
   const classes = useStyles()
   const [messages, setMessages] = React.useState([])
   const [, updateState] = React.useState();
@@ -31,8 +37,20 @@ export default function AlignItemsList(props) {
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
-    
-    const query = `{
+
+    dgraphClient.newTxn().query(`
+    { 
+      total(func: gt(count(~replyTo), 5)) { count(uid) } 
+    }`).then((res, err) => {
+      if(err){
+        return
+      }
+      return Promise.resolve(res.data.total[0].count)
+    }).then((res, err)=>{
+    var query = ''
+    switch (type) {
+      case "latest":
+        query = `{
       latestChats(func: gt(count(~replyTo), 5) ,orderdesc: time, first: 15)			
         {
           ID,
@@ -43,18 +61,50 @@ export default function AlignItemsList(props) {
         }
       }  
     `;
-
+        break;
+      case "random":
+        var offset = getRandomInt(0,res-15)
+        query = `{
+      latestChats(func: gt(count(~replyTo), 5) , first: 15, offset: `+offset+`)
+        {
+          ID,
+          text,
+          time,
+          address,
+          count: count(~replyTo)
+        }
+      }  
+    `;
+        break;
+      default:
+        query = `{
+      latestChats(func: gt(count(~replyTo), 5) ,orderdesc: time, first: 15)			
+        {
+          ID,
+          text,
+          time,
+          address,
+          count: count(~replyTo)
+        }
+      }  
+    `;
+        break;
+    }
     dgraphClient.newTxn().query(query).then((res, err) => {
+      console.log(err)
       const re = res.data;
       // console.log(re)
       setMessages(re.latestChats)
       // console.log(messages)
       forceUpdate()
     })
+
+    })
   }
 
   useEffect(() => {
     RefreshMessage()
+    
   }, [])
 
 
