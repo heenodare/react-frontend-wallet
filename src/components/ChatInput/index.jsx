@@ -8,6 +8,9 @@ import MenuIcon from '@material-ui/icons/Menu'
 import SendIcon from '@material-ui/icons/Send'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
+import Resizer from 'react-image-file-resizer';
+import VideoThumbnail from 'react-video-thumbnail'; // use npm published version
+import { gzip, ungzip } from 'node-gzip';
 
 const useStyles = makeStyles({
   appBar: {
@@ -34,12 +37,82 @@ const useStyles = makeStyles({
   },
 })
 
+function buildFileSelector() {
+  const fileSelector = document.createElement('input');
+  fileSelector.setAttribute('type', 'file');
+  return fileSelector;
+}
+
 function ChatInput() {
   const classes = useStyles()
-
+  const fileSelector = buildFileSelector()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
+
+
+  function handleFileSelect() {
+    fileSelector.click();
+  }
+
+  function fileChangedHandler(event, type) {
+    var fileInput = false
+    if (event.target.files[0]) {
+      fileInput = true
+    }
+    if (fileInput) {
+      if (type == "image") {
+        Resizer.imageFileResizer(
+          event.target.files[0],
+          320,
+          240,
+          'JPEG',
+          2,
+          0,
+          uri => {
+            console.log(uri)
+            gzip(uri)
+              .then((compressed) => {
+                var b64encoded = btoa(String.fromCharCode.apply(null, compressed));
+                console.log(b64encoded)
+                // return ungzip(compressed);
+              })
+              // .then((decompressed) => {
+              //   console.log(decompressed.toString()); 
+              // });
+          },
+          'base64'
+        );
+      }
+      else if (type == "video") {
+        var video = document.createElement('video');
+        // var video = document.getElementById('video');
+        video.width = 320;
+        video.height = 240;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 320;
+        canvas.height = 240;
+        var context = canvas.getContext('2d');
+        video.setAttribute('src', URL.createObjectURL(event.target.files[0]));
+        video.load();
+        video.play();
+
+        video.addEventListener('loadeddata', function () {
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          var dataURI = canvas.toDataURL('image/jpeg', 0.02);
+          console.log(dataURI)
+          gzip(dataURI)
+          .then((compressed) => {
+            var b64encoded = btoa(String.fromCharCode.apply(null, compressed));
+            console.log(b64encoded)
+            // return ungzip(compressed);
+          })
+        });
+      }
+    }
+  }
+
 
   function handleInputMenuOpen(event) {
     setAnchorEl(event.currentTarget)
@@ -60,9 +133,19 @@ function ChatInput() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Image</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Video</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Audio</MenuItem>
+      <MenuItem onClick={() => {
+        handleMenuClose();
+        fileSelector.setAttribute('accept', 'image/*');
+        fileSelector.onchange = (event) => { fileChangedHandler(event, "image") };
+        handleFileSelect();
+      }}>Image</MenuItem>
+      <MenuItem onClick={() => {
+        handleMenuClose();
+        fileSelector.setAttribute('accept', 'video/*');
+        fileSelector.onchange = (event) => { fileChangedHandler(event, "video") };
+        handleFileSelect();
+      }}>Video</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Audio</MenuItem> */}
     </Menu>
   )
 

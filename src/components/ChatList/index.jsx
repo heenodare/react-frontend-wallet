@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function AlignItemsList() {
+export default function AlignItemsList(props) {
+  const {type} = props
   const classes = useStyles()
   const [messages, setMessages] = React.useState([])
   const [, updateState] = React.useState();
@@ -30,7 +31,7 @@ export default function AlignItemsList() {
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
-
+    
     const query = `{
       latestChats(func: gt(count(~replyTo), 5) ,orderdesc: time, first: 15)			
         {

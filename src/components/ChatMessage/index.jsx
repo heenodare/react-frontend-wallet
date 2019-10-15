@@ -103,7 +103,7 @@ export default function Message(props) {
     });
 
     client.add(torrentId, (torrent) => {
-      console.log('Client is downloading:', torrent.infoHash)
+      // console.log('Client is downloading:', torrent.infoHash)
 
       console.log(torrent.files)
       torrent.on('done', () => {

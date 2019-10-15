@@ -73,8 +73,8 @@ export default function FullWidthTabs() {
         >
           {/* <Tab label="My Chat" {...a11yProps(0)} /> */}
           <Tab label="Latest" {...a11yProps(0)} />
-          <Tab label="User" {...a11yProps(1)} />
-          <Tab label="Comment" {...a11yProps(2)} />
+          <Tab label="Random" {...a11yProps(1)} />
+          <Tab label="My Chat" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -82,17 +82,16 @@ export default function FullWidthTabs() {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {/* <TabPanel value={value} index={0} dir={theme.direction}>
-          <ChatList />
-        </TabPanel> */}
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <ChatList />
+          <ChatList type="latest"/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <UserList />
+          <ChatList type="random"/>
+          {/* <UserList /> */}
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <CommentList />
+          <ChatList type="myChat"/>
+          {/* <CommentList /> */}
         </TabPanel>
       </SwipeableViews>
     </div>
