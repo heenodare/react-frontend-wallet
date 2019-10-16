@@ -11,6 +11,7 @@ import Menu from '@material-ui/core/Menu'
 import Resizer from 'react-image-file-resizer';
 import VideoThumbnail from 'react-video-thumbnail'; // use npm published version
 import { gzip, ungzip } from 'node-gzip';
+import WebTorrent from 'webtorrent'
 
 const useStyles = makeStyles({
   appBar: {
@@ -61,6 +62,12 @@ function ChatInput() {
       fileInput = true
     }
     if (fileInput) {
+      var client = new WebTorrent()
+      
+      client.seed(event.target.files[0], function (torrent) {
+        console.log('Client is seeding:', torrent.magnetURI)
+      })
+
       if (type == "image") {
         Resizer.imageFileResizer(
           event.target.files[0],
