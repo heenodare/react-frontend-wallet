@@ -46,7 +46,7 @@ export default function AlignItemsList(props) {
 
     dgraphClient.newTxn().query(`
     { 
-      total(func: gt(count(~replyTo), 5)) { count(uid) } 
+      total(func: gt(count(~replyTo), 4)) { count(uid) } 
     }`).then((res, err) => {
       if (err) {
         return
@@ -57,7 +57,7 @@ export default function AlignItemsList(props) {
       switch (type) {
         case "latest":
           query = `{
-      latestChats(func: gt(count(~replyTo), 5) ,orderdesc: time, first: 15, offset: `+ QueryPage*15 +`)			
+      latestChats(func: gt(count(~replyTo), 4) ,orderdesc: time, first: 15, offset: `+ QueryPage*15 +`)			
         {
           ID,
           text,
@@ -74,7 +74,7 @@ export default function AlignItemsList(props) {
         case "random":
           var offset = getRandomInt(0, res - 15)
           query = `{
-      latestChats(func: gt(count(~replyTo), 5) , first: 15, offset: `+ offset + `)
+      latestChats(func: gt(count(~replyTo), 4) , first: 15, offset: `+ offset + `)
         {
           ID,
           text,
@@ -87,7 +87,7 @@ export default function AlignItemsList(props) {
           break;
         default:
           query = `{
-      latestChats(func: gt(count(~replyTo), 5) ,orderdesc: time, first: 15, offset: `+ QueryPage*15 +`)			
+      latestChats(func: gt(count(~replyTo), 4) ,orderdesc: time, first: 15, offset: `+ QueryPage*15 +`)			
         {
           ID,
           text,
@@ -111,7 +111,7 @@ export default function AlignItemsList(props) {
             tmpMessages.push(item)
           }
         })
-        console.log(tmpMessages)
+        // console.log(tmpMessages)
         setMessages(tmpMessages)
 
         // console.log(messages)

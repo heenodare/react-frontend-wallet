@@ -64,7 +64,8 @@ function ChatHeader(props) {
     >
       <MenuItem
         onClick={() => {
-          navigate('/branches')
+          const urlParams = new URLSearchParams(window.location.search);
+          navigate('/branches?id='+urlParams.get('id'))
           handleMenuClose()
         }}
       >

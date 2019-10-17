@@ -50,8 +50,7 @@ function ChatInput() {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
-
-
+  
   function handleFileSelect() {
     fileSelector.click();
   }
@@ -62,9 +61,14 @@ function ChatInput() {
       fileInput = true
     }
     if (fileInput) {
+
       var client = new WebTorrent()
-      
-      client.seed(event.target.files[0], function (torrent) {
+      console.log(event.target.files[0])
+      client.seed(event.target.files[0], function (torrent,err) {
+        if(err){
+          console.log(err)
+          return
+        }
         console.log('Client is seeding:', torrent.magnetURI)
       })
 
