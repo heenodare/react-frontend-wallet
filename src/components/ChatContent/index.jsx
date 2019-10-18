@@ -9,7 +9,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 
 const mapStateToProps = state => {
   return {
@@ -56,13 +57,19 @@ function ChatContent(props) {
           data={item.data}
           message={item.text}
           ReplyTo={item.replyTo}
+          preview={item.preview}
         />
       )
     })
   }
   function scrollToBottom() {
-    messagesEnd.current.scrollIntoView({ alignToTop: false })
-
+    if(messagesEnd.current == null){
+      console.log(1)
+    }
+    else{
+      console.log(2)
+      messagesEnd.current.scrollIntoView({ alignToTop: false })
+    }
   }
 
   function MessagesToArray(message) {
@@ -101,6 +108,7 @@ function ChatContent(props) {
           signature,
           type,
           tags,
+          preview,
       }
       }`;
     const vars = { "$id": urlParams.get('id') };
@@ -117,6 +125,7 @@ function ChatContent(props) {
         setCurrentChatConnect({ title: root.text, id: root.ID })
         setMessages(tmpMessages)
         setLoading(false)
+        // window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
       })
     })
   }
@@ -125,14 +134,48 @@ function ChatContent(props) {
     RefreshMessages()
   },[])
 
-  if(loading){
-    return(
-      <div>
-      <CircularProgress style={{margin: "0 auto", display: "block"}} color="secondary" />
-      </div>
-    )
+
+  function addIcon(){
+    if(End < messages.length)
+    return (
+    <ListItem
+      button
+      onClick={() => {
+        setEnd(End+10)
+      }}
+    >
+      <ListItemIcon style={{paddingTop: 10,margin: "0 auto", display: "block"}}>
+        <AddIcon />
+      </ListItemIcon>
+    </ListItem>)
+    else{
+      return <ListItem
+    >
+       <ListItemText
+        secondary={"End of this chat"}
+      />
+    </ListItem>
+    }
   }
-  else{
+
+  function content(){
+    if(loading){
+      return(
+        <div>
+        <CircularProgress style={{margin: "0 auto", display: "block"}} color="secondary" />
+        </div>
+      )
+    }
+    else{
+      return(
+        <>
+        {MessageList(messages.slice(0, End))}
+        {addIcon()}
+        </>
+      )
+    }
+  }
+  
   return (
     // <InfiniteScroll
     //   pageStart={0}
@@ -156,25 +199,10 @@ function ChatContent(props) {
     //   // isReverse
     // >
     <> 
-      {MessageList(messages.slice(0, End))}
-      <ListItem
-          button
-          onClick={() => {
-            if(End+10 > messages.length){
-              alert("No more new messages")
-            }
-            else{
-            setEnd(End+10)
-            }
-          }}
-        >
-          <ListItemIcon style={{paddingTop: 10,margin: "0 auto", display: "block"}}>
-            <AddIcon />
-          </ListItemIcon>
-        </ListItem>
+      {content()}
+      <div style={{ float: 'left', clear: 'both' }} id="test" ref={messagesEnd} /> 
     </>
-      /* <div style={{ float: 'left', clear: 'both' }} ref={messagesEnd} /> */
+      /* */
     // </InfiniteScroll>
   )
-  }
 }

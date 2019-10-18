@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -13,6 +13,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import IconButton from '@material-ui/core/IconButton';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MoreIcon from '@material-ui/icons/MoreVert'
+import { gzip, ungzip } from 'node-gzip';
 
 Message.propTypes = {
   timeStamp: PropTypes.number.isRequired,
@@ -51,9 +53,12 @@ export default function Message(props) {
     ReplyTo,
     isOnChain,
     isSigned,
+    preview,
     position,
   } = props
+
   const classes = useStyles()
+  const [previewImg, setPreview] = React.useState("");
   const [open, setOpen] = React.useState(false)
   const [downloaded, setDownloaded] = React.useState(false)
   const [downloading, setDownloading] = React.useState(false)
@@ -76,6 +81,17 @@ export default function Message(props) {
     }
     return new Date(time * 1000).toLocaleDateString()
   }
+
+  useEffect(() => {
+    if (preview != "") {
+      ungzip(Uint8Array.from(atob(preview), c => c.charCodeAt(0)))
+        .then((decompressed) => {
+          // console.log(decompressed.toString());
+          setPreview(decompressed.toString())
+        });
+    }
+  }, [])
+
 
   function handleToggle() {
     setOpen(prevOpen => !prevOpen)
@@ -121,18 +137,19 @@ export default function Message(props) {
   }
   function downloadbutton() {
     if (!downloaded) {
-      if(!downloading){
-      return (
-        <>
-        <IconButton aria-label="download" onClick={downloadtorrent}>
-          <GetAppIcon />
-        </IconButton>
-        </>
-      )
+      if (!downloading) {
+        return (
+          <>
+            <img src={previewImg}></img>
+            <IconButton aria-label="download" onClick={downloadtorrent}>
+              <GetAppIcon />
+            </IconButton>
+          </>
+        )
       }
-      else{
-        return(
-          <CircularProgress style={{ display: "block"}} color="secondary" />
+      else {
+        return (
+          <CircularProgress style={{ display: "block" }} color="secondary" />
         )
       }
     }
@@ -218,7 +235,15 @@ export default function Message(props) {
                 >
                   {timeDifference(timeStamp)}
                 </Typography>
-                <Divider/>
+                <IconButton
+                  edge="end"
+                  aria-label="more"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <MoreIcon style={{ width: 20, height: 20 }} />
+                </IconButton>
+                <Divider />
                 <Typography
                   variant="body2"
                   display="block"
@@ -260,6 +285,14 @@ export default function Message(props) {
                 >
                   {timeDifference(timeStamp)}
                 </Typography>
+                <IconButton
+                  edge="end"
+                  aria-label="more"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <MoreIcon style={{ width: 20, height: 20 }} />
+                </IconButton>
                 <Divider />
                 {downloadbutton()}
                 <Divider />
@@ -277,49 +310,57 @@ export default function Message(props) {
         </Grid>
       )
     case "video":
-    return (
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <div
-            style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
-            role="presentation"
-            onClick={handleToggle}
-            onKeyPress={() => { }}
-            ref={anchorRef}
-          >
-            <Paper className={classes.paper}>
-              <Typography
-                variant="caption"
-                display="inline"
-                align="left"
-                style={{ fontSize: 14 }}
-              >
-                {"#" + ID + " " + address}
-              </Typography>
-              <Typography
-                variant="caption"
-                display="inline"
-                align="left"
-                style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-              >
-                {timeDifference(timeStamp)}
-              </Typography>
-              <Divider />
-              {downloadbutton()}
-              <Divider />
-              <Typography
-                variant="body2"
-                display="block"
-                style={{ paddingRight: 10 }}
-              >
-                {message}
-              </Typography>
-            </Paper>
-          </div>
+      return (
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <div
+              style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
+              role="presentation"
+              onClick={handleToggle}
+              onKeyPress={() => { }}
+              ref={anchorRef}
+            >
+              <Paper className={classes.paper}>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 14 }}
+                >
+                  {"#" + ID + " " + address}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+                >
+                  {timeDifference(timeStamp)}
+                </Typography>
+                <IconButton
+                  edge="end"
+                  aria-label="more"
+                  aria-haspopup="true"
+                  color="inherit"
+                >
+                  <MoreIcon style={{ width: 20, height: 20 }} />
+                </IconButton>
+                <Divider />
+                {downloadbutton()}
+                <Divider />
+                <Typography
+                  variant="body2"
+                  display="block"
+                  style={{ paddingRight: 10 }}
+                >
+                  {message}
+                </Typography>
+              </Paper>
+            </div>
+          </Grid>
+          {/* {PoperMenu()} */}
         </Grid>
-        {/* {PoperMenu()} */}
-      </Grid>
-    )
+      )
     default:
       return (
         <>

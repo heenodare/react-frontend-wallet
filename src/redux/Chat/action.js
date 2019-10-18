@@ -4,3 +4,10 @@ export const setCurrentChat = chat => {
     value: chat,
   }
 }
+
+export const setChatMessages = messages =>{
+  return {
+    type: 'setChatMessages',
+    value: messages
+  }
+}
