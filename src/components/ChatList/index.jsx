@@ -33,7 +33,7 @@ export default function AlignItemsList(props) {
   const [, updateState] = React.useState();
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  function RefreshMessage(refresh) {
+  function RefreshMessage() {
     setLoading(true)
     const urlParams = new URLSearchParams(window.location.search);
     const clientStub = new dgraph.DgraphClientStub(
