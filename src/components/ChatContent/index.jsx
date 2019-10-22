@@ -1,6 +1,5 @@
 import React, { useEffect, createRef, useCallback } from 'react'
 import ChatMessage from 'components/ChatMessage'
-import InfiniteScroll from 'react-infinite-scroller'
 import * as dgraph from 'dgraph-js-http'
 import omit from 'object.omit';
 import { connect } from 'react-redux'
@@ -10,7 +9,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
 
 const mapStateToProps = state => {
   return {
@@ -113,6 +111,10 @@ function ChatContent(props) {
       }`;
     const vars = { "$id": urlParams.get('id') };
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
+      if(err){
+        console.log(err)
+        return
+      }
       const re = res.data;
       var root = re.getMessages[0];
       var tmpMessages = messages;

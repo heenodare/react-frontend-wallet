@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import ArrowBack from '@material-ui/icons/ArrowBack'
-import MoreIcon from '@material-ui/icons/MoreVert'
+import CallSplitIcon from '@material-ui/icons/CallSplit';
 import { navigate } from 'gatsby'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -97,10 +97,14 @@ function ChatHeader(props) {
             aria-label="more"
             aria-controls={menuId}
             aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
+            // onClick={handleProfileMenuOpen}
+            onClick={()=>{         
+              const urlParams = new URLSearchParams(window.location.search);
+              navigate('/branches?id='+urlParams.get('id'))}
+            }
             color="inherit"
           >
-            <MoreIcon />
+            <CallSplitIcon />
           </IconButton>
         </Toolbar>
       </AppBar>

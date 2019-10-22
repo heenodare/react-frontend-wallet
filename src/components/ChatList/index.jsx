@@ -48,11 +48,16 @@ export default function AlignItemsList(props) {
     { 
       total(func: gt(count(~replyTo), 4)) { count(uid) } 
     }`).then((res, err) => {
-      if (err) {
+      if(err){
+        console.log(err)
         return
       }
       return Promise.resolve(res.data.total[0].count)
     }).then((res, err) => {
+      if(err){
+        console.log(err)
+        return
+      }
       var query = ''
       switch (type) {
         case "latest":
@@ -102,7 +107,10 @@ export default function AlignItemsList(props) {
           break;
       }
       dgraphClient.newTxn().query(query).then((res, err) => {
-
+        if(err){
+          console.log(err)
+          return
+        }
         const re = res.data;
         // console.log(re)
         var tmpMessages = messages

@@ -71,6 +71,10 @@ export default function CustomizedInputBase() {
       }`;
     const vars = { "$search": value };
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
+      if(err){
+        console.log(err)
+        return
+      }
       setMessages(res.data.search)
       setLoading(false)
     })
@@ -98,6 +102,10 @@ export default function CustomizedInputBase() {
       }`;
     const vars = { "$search": value };
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
+      if(err){
+        console.log(err)
+        return
+      }
       var tmpMessages = messages
       res.data.search.forEach((item)=>{
         if(!tmpMessages.includes(item)){

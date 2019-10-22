@@ -57,6 +57,10 @@ export default function AlignItemsList() {
       }`;
     const vars = { "$id": urlParams.get('id') };
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
+      if(err){
+        console.log(err)
+        return
+      }
       // console.log(res)
       setUpper(res.data.getUpperBranch[0].replyTo[0])
       if (res.data.getLowerBranches.length != 0) {
