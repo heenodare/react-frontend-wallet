@@ -56,7 +56,7 @@ export default function Message(props) {
     preview,
     position,
   } = props
-
+  const chatID = new URLSearchParams(window.location.search).get('id');
   const classes = useStyles()
   const [previewImg, setPreview] = React.useState("");
   const [open, setOpen] = React.useState(false)
@@ -235,6 +235,14 @@ export default function Message(props) {
                 >
                   {timeDifference(timeStamp)}
                 </Typography>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+                >
+                {ReplyTo.toString() == chatID? "":"this is replying to "+ReplyTo.toString()}
+                </Typography>
                 <IconButton
                   edge="end"
                   aria-label="more"
@@ -284,6 +292,14 @@ export default function Message(props) {
                   style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
                 >
                   {timeDifference(timeStamp)}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+                >
+                {ReplyTo.toString() == chatID? "":"this is replying to "+ReplyTo.toString()}
                 </Typography>
                 <IconButton
                   edge="end"
@@ -336,6 +352,14 @@ export default function Message(props) {
                   style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
                 >
                   {timeDifference(timeStamp)}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  display="inline"
+                  align="left"
+                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+                >
+                {ReplyTo.toString() == chatID? "":"this is replying to "+ReplyTo.toString()}
                 </Typography>
                 <IconButton
                   edge="end"
