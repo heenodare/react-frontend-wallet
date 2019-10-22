@@ -56,7 +56,7 @@ function ChatContent(props) {
           type={item.type}
           data={item.data}
           message={item.text}
-          ReplyTo={item.replyTo[0].ID}
+          ReplyTo={item.replyTo[0]}
           preview={item.preview}
         />
       )
@@ -219,7 +219,8 @@ function ChatContent(props) {
       const query = `	query loadMessage($id: string) {
         loadMessage(func: eq(ID, $id)) {
             replyTo {
-              ID
+              ID,
+              text
             },
             ID,
             text,

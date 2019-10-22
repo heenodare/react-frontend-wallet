@@ -9,7 +9,6 @@ import SendIcon from '@material-ui/icons/Send'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Resizer from 'react-image-file-resizer';
-import VideoThumbnail from 'react-video-thumbnail'; // use npm published version
 import { gzip, ungzip } from 'node-gzip';
 import WebTorrent from 'webtorrent'
 

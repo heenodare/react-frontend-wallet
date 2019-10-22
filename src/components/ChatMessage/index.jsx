@@ -15,6 +15,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { gzip, ungzip } from 'node-gzip';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 Message.propTypes = {
   timeStamp: PropTypes.number.isRequired,
@@ -92,6 +93,67 @@ export default function Message(props) {
     }
   }, [])
 
+  function messageHeader() {
+    return (<>
+      <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 14 }}
+      >
+        {"#" + ID + " " + address}
+      </Typography>
+      <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+      >
+        {timeDifference(timeStamp)}
+      </Typography>
+      <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+      >
+        {ReplyTo.ID.toString() == chatID ? "" : "Replying to #" + ReplyTo.ID.toString()}
+      </Typography>
+      <IconButton
+        edge="end"
+        aria-label="more"
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <MoreIcon style={{ width: 20, height: 20 }} />
+      </IconButton>
+    </>
+    )
+  }
+
+  function ReplyMessages(){
+    if(ReplyTo.ID.toString() == chatID){
+      return
+    }
+    else{    
+      return(
+        <>
+        <div style={{paddingLeft: 20}}>
+        <ReplyIcon color="disabled" fontSize="small" style={{paddingTop: 2}}/>
+        <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 12 , paddingLeft: 5 }}
+      >
+        {ReplyTo.text}
+        </Typography>
+        </div>
+        <Divider/>
+        </>
+    )
+    }
+  }
 
   function handleToggle() {
     setOpen(prevOpen => !prevOpen)
@@ -219,39 +281,9 @@ export default function Message(props) {
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 14 }}
-                >
-                  {"#" + ID + " " + address}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-                >
-                {ReplyTo.toString() == chatID? "":"this is replying to "+ReplyTo.toString()}
-                </Typography>
-                <IconButton
-                  edge="end"
-                  aria-label="more"
-                  aria-haspopup="true"
-                  color="inherit"
-                >
-                  <MoreIcon style={{ width: 20, height: 20 }} />
-                </IconButton>
+                {messageHeader()}
                 <Divider />
+                {ReplyMessages()}
                 <Typography
                   variant="body2"
                   display="block"
@@ -277,39 +309,9 @@ export default function Message(props) {
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 14 }}
-                >
-                  {"#" + ID + " " + address}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-                >
-                {ReplyTo.toString() == chatID? "":"this is replying to "+ReplyTo.toString()}
-                </Typography>
-                <IconButton
-                  edge="end"
-                  aria-label="more"
-                  aria-haspopup="true"
-                  color="inherit"
-                >
-                  <MoreIcon style={{ width: 20, height: 20 }} />
-                </IconButton>
+                {messageHeader()}
                 <Divider />
+                {ReplyMessages()}
                 {downloadbutton()}
                 <Divider />
                 <Typography
@@ -337,39 +339,9 @@ export default function Message(props) {
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 14 }}
-                >
-                  {"#" + ID + " " + address}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  align="left"
-                  style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
-                >
-                {ReplyTo.toString() == chatID? "":"this is replying to "+ReplyTo.toString()}
-                </Typography>
-                <IconButton
-                  edge="end"
-                  aria-label="more"
-                  aria-haspopup="true"
-                  color="inherit"
-                >
-                  <MoreIcon style={{ width: 20, height: 20 }} />
-                </IconButton>
+                {messageHeader()}
                 <Divider />
+                {ReplyMessages()}
                 {downloadbutton()}
                 <Divider />
                 <Typography
