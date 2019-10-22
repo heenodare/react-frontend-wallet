@@ -29,7 +29,7 @@ export default function AlignItemsList(props) {
   const classes = useStyles()
   const [messages, setMessages] = React.useState([])
   const [loading, setLoading] = React.useState(true)
-  const [QueryPage, setPage] = React.useState(1)
+  const [QueryPage, setPage] = React.useState(0)
   const [, updateState] = React.useState();
   const forceUpdate = useCallback(() => updateState({}), []);
 
@@ -124,7 +124,6 @@ export default function AlignItemsList(props) {
 
   useEffect(() => {
     RefreshMessage()
-
   }, [])
 
 
