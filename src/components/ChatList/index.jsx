@@ -24,22 +24,21 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export default function AlignItemsList(props) {
+export default function ChatList(props) {
   const { type } = props
   const classes = useStyles()
-  const [messages, setMessages] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
-  const [QueryPage, setPage] = React.useState(0)
+  const [messages, setMessages] = React.useState([])  //messages to show
+  const [loading, setLoading] = React.useState(true)  //loading indicator
+  const [offset, setOffset] = React.useState(0)  //offset
   const [, updateState] = React.useState();
   const forceUpdate = useCallback(() => updateState({}), []);
 
+
+  //get the messages list from dgraph data base
   function RefreshMessage() {
     setLoading(true)
-    const urlParams = new URLSearchParams(window.location.search);
     const clientStub = new dgraph.DgraphClientStub(
-      // addr: optional, default: "http://localhost:8080"
       "http://25.27.157.248:8080",
-      // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
@@ -49,20 +48,23 @@ export default function AlignItemsList(props) {
       total(func: gt(count(~replyTo), 4)) { count(uid) } 
     }`).then((res, err) => {
       if(err){
+        setLoading(false)
         console.log(err)
         return
       }
       return Promise.resolve(res.data.total[0].count)
     }).then((res, err) => {
       if(err){
+        setLoading(false)
         console.log(err)
         return
       }
       var query = ''
       switch (type) {
+        //get the latest mesages with more than 4 replys to it
         case "latest":
           query = `{
-      latestChats(func: gt(count(~replyTo), 4) ,orderdesc: time, first: 15, offset: `+ QueryPage*15 +`)			
+      latestChats(func: gt(count(~replyTo), 4) ,orderdesc: time, first: 15, offset: `+ offset +`)			
         {
           ID,
           text,
@@ -72,14 +74,11 @@ export default function AlignItemsList(props) {
         }
       }  
     `;
-        var tmpPage = QueryPage + 1
-        setPage(tmpPage);
-
           break;
         case "random":
-          var offset = getRandomInt(0, res - 15)
+        //get random messages with more than 4 replys to it
           query = `{
-      latestChats(func: gt(count(~replyTo), 4) , first: 15, offset: `+ offset + `)
+      latestChats(func: gt(count(~replyTo), 4) , first: 15, offset: `+ getRandomInt(0, res - 15) + `)
         {
           ID,
           text,
@@ -92,7 +91,7 @@ export default function AlignItemsList(props) {
           break;
         default:
           query = `{
-      latestChats(func: gt(count(~replyTo), 4) ,orderdesc: time, first: 15, offset: `+ QueryPage*15 +`)			
+      latestChats(func: gt(count(~replyTo), 4) ,orderdesc: time, first: 15, offset: `+ offset +`)			
         {
           ID,
           text,
@@ -102,29 +101,26 @@ export default function AlignItemsList(props) {
         }
       }  
     `;
-    var tmpPage = QueryPage + 1
-    setPage(tmpPage);
           break;
       }
       dgraphClient.newTxn().query(query).then((res, err) => {
         if(err){
+          setLoading(false)
           console.log(err)
           return
         }
         const re = res.data;
-        // console.log(re)
         var tmpMessages = messages
+        //prevent duplicate messages
         re.latestChats.forEach((item)=>{
           if(!tmpMessages.includes(item)){
             tmpMessages.push(item)
           }
         })
-        // console.log(tmpMessages)
+        //set the offset for next query
+        setOffset(offset+15);
         setMessages(tmpMessages)
-
-        // console.log(messages)
         setLoading(false)
-        // forceUpdate()
       })
 
     })

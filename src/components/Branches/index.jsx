@@ -24,17 +24,18 @@ export default function AlignItemsList() {
   const [upper, setUpper] = React.useState(null)
   const [loading, setLoading] = React.useState(true)
 
+
+  //get all the related branches in current chat
   function getBranches() {
     setLoading(true)
     const urlParams = new URLSearchParams(window.location.search);
     const clientStub = new dgraph.DgraphClientStub(
-      // addr: optional, default: "http://localhost:8080"
       "http://25.27.157.248:8080",
-      // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
 
+    //get the upper branch and the lower branches with more than 4 replys
     const query = `	query getBranches($id: string) {
       getUpperBranch(func: eq(ID, $id)){
         replyTo{
@@ -58,6 +59,7 @@ export default function AlignItemsList() {
     const vars = { "$id": urlParams.get('id') };
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       if(err){
+        setLoading(false)
         console.log(err)
         return
       }
@@ -77,6 +79,7 @@ export default function AlignItemsList() {
     getBranches()
   }, [])
 
+  //display the chat list
   function ChatList(items) {
     if (items.length == 0) {
       return (

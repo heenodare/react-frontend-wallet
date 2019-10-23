@@ -9,11 +9,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItemText from '@material-ui/core/ListItemText';
-import { setSyntheticTrailingComments } from 'typescript';
 
 const mapStateToProps = state => {
   return {
-    CurrentChat: state.chatData.CurrentChat,
+    
   }
 }
 
@@ -30,8 +29,6 @@ export default connect(
   mapDispatchToProps
 )(ChatContent)
 
-
-
 function ChatContent(props) {
   const messagesEnd = createRef()
   const [messages, setMessages] = React.useState([])
@@ -39,7 +36,7 @@ function ChatContent(props) {
   const [IDList, setIDList] = React.useState([])
   const [, updateState] = React.useState();
   const forceUpdate = useCallback(() => updateState({}), []);
-  const { setCurrentChatConnect, CurrentChat } = props
+  const { setCurrentChatConnect } = props
   const [End, setEnd] = React.useState(10)
   const [Start, setStart] = React.useState(0)
   var promises = [];
@@ -72,18 +69,7 @@ function ChatContent(props) {
     }
   }
 
-  function MessagesToArray(message) {
-    message.replys.forEach((item, index)=>{
-      var tmpMessages = messages;
-      tmpMessages.push(omit(item, 'replys'));
-      setMessages(tmpMessages);
-      if(item.replys != undefined){
-        promises.push(MessagesToArray(item))
-      }
-    })
-    return Promise.resolve()
-  }
-
+  //set the IDList state from a nested ID tree to an array
   function IDToArray(ID) {
     ID.replys.forEach((item)=>{
       var tmpID = IDList;
@@ -96,69 +82,17 @@ function ChatContent(props) {
     return Promise.resolve()
   }
 
-  function RefreshMessages(){
-    setCurrentChatConnect({ title: "Loading", id: -1 })
-    setLoading(true)
-    setMessages([])
-    const urlParams = new URLSearchParams(window.location.search);
-    const clientStub = new dgraph.DgraphClientStub(
-      // addr: optional, default: "http://localhost:8080"
-      "http://25.27.157.248:8080",
-      // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
-      false,
-    );
-    const dgraphClient = new dgraph.DgraphClient(clientStub);
-
-    const query = `	query getMessages($id: string) {
-      getMessages(func: eq(ID, $id)) @recurse {
-        replys:~replyTo,
-          ID,
-          text,
-          data,
-          address,
-          time,
-          signature,
-          type,
-          tags,
-          preview,
-      }
-      }`;
-    const vars = { "$id": urlParams.get('id') };
-    dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
-      if(err){
-        console.log(err)
-        return
-      }
-      const re = res.data;
-      var root = re.getMessages[0];
-      var tmpMessages = messages;
-      tmpMessages.push(omit(root, 'replys'));
-      setMessages(tmpMessages);
-      promises.push(MessagesToArray(root))
-      Promise.all(promises).then(()=>{
-        tmpMessages = messages;
-        tmpMessages.sort((a, b) => (a.time > b.time) ? 1 : -1)
-        setCurrentChatConnect({ title: root.text, id: root.ID })
-        setMessages(tmpMessages)
-        setLoading(false)
-        // window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-      })
-    })
-  }
-
   useEffect(() => {
-    // RefreshMessages()
     getIDList()
   },[])
 
+  //get the list of message ID and text from Dgraph
   function getIDList(){
     setLoading(true)
     setIDList([])
     const urlParams = new URLSearchParams(window.location.search);
     const clientStub = new dgraph.DgraphClientStub(
-      // addr: optional, default: "http://localhost:8080"
       "http://25.27.157.248:8080",
-      // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
@@ -174,6 +108,7 @@ function ChatContent(props) {
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       if(err){
         console.log(err)
+        setLoading(false)
         return
       }
       if(res.data.getID.length == 0){
@@ -197,21 +132,18 @@ function ChatContent(props) {
         setCurrentChatConnect({ title: root.text, id: root.ID })
         setIDList(tmpID)
         LoadMessages()
-        // window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
       })
     })
   }
 
+  //load the messages with in the range between Start and End
   function LoadMessages(){
     setLoading(true)
-    // console.log(IDList.slice(Start, End))
     var allLoad = []
     var tmpMessages = messages
     IDList.slice(Start, End).forEach((item)=>{
       const clientStub = new dgraph.DgraphClientStub(
-        // addr: optional, default: "http://localhost:8080"
         "http://25.27.157.248:8080",
-        // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
         false,
       );
       const dgraphClient = new dgraph.DgraphClient(clientStub);
@@ -236,6 +168,7 @@ function ChatContent(props) {
       const vars = { "$id": item.ID.toString() };
       allLoad.push(dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
         if(err){
+          setLoading(false)
           console.log(err)
           return Promise.reject()
         }
@@ -251,7 +184,8 @@ function ChatContent(props) {
       setLoading(false)
     })
   }
-      
+  
+  //return a button to load more messages or End of messages if it reaches the end
   function addIcon(){
     if(End < IDList.length)
     return (
@@ -274,7 +208,8 @@ function ChatContent(props) {
     </ListItem>
     }
   }
-
+  
+  //return a button to load more messages or loading indicator when loading
   function content(){
     if(loading){
       return(
@@ -293,33 +228,10 @@ function ChatContent(props) {
   }
   
   return (
-    // <InfiniteScroll
-    //   pageStart={0}
-    //   loadMore={()=>{
-    //     if(loading){
-    //       return
-    //     }
-    //     setLoading(true)
-    //     if(!loading){
-    //     console.log("reach end")
-    //     End += 10;
-    //     }
-    //   }}
-    //   hasMore={true}
-    //   loader={
-    //     <div className="loader" key={0}>
-    //       Loading ...
-    //     </div>
-    //   }
-    //   useWindow={true}
-    //   // isReverse
-    // >
     <> 
       {MessageList(messages)}
       {content()}
       <div style={{ float: 'left', clear: 'both' }} id="test" ref={messagesEnd} /> 
     </>
-      /* */
-    // </InfiniteScroll>
   )
 }

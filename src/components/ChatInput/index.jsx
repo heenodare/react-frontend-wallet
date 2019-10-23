@@ -54,6 +54,7 @@ function ChatInput() {
     fileSelector.click();
   }
 
+  //handle the uploaded file
   function fileChangedHandler(event, type) {
     var fileInput = false
     if (event.target.files[0]) {
@@ -62,7 +63,6 @@ function ChatInput() {
     if (fileInput) {
 
       var client = new WebTorrent()
-      console.log(event.target.files[0])
       client.seed(event.target.files[0], function (torrent,err) {
         if(err){
           console.log(err)
@@ -70,7 +70,8 @@ function ChatInput() {
         }
         console.log('Client is seeding:', torrent.magnetURI)
       })
-
+      
+      //generate preview image and compress it in gzip format 
       if (type == "image") {
         Resizer.imageFileResizer(
           event.target.files[0],
@@ -96,7 +97,6 @@ function ChatInput() {
       }
       else if (type == "video") {
         var video = document.createElement('video');
-        // var video = document.getElementById('video');
         video.width = 320;
         video.height = 240;
 
@@ -116,7 +116,6 @@ function ChatInput() {
           .then((compressed) => {
             var b64encoded = btoa(String.fromCharCode.apply(null, compressed));
             console.log(b64encoded)
-            // return ungzip(compressed);
           })
         });
       }

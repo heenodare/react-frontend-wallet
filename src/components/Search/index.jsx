@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function CustomizedInputBase() {
+export default function Search() {
   const classes = useStyles();
   const [search, setSearch] = React.useState("");
   const [loading, setLoading] = React.useState(false)
@@ -49,13 +49,11 @@ export default function CustomizedInputBase() {
     )
   }
 
+  //get the search results from input
   function searchMessages(value) {
     setLoading(true)
-    setOffset(15)
     const clientStub = new dgraph.DgraphClientStub(
-      // addr: optional, default: "http://localhost:8080"
       "http://25.27.157.248:8080",
-      // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
@@ -73,20 +71,20 @@ export default function CustomizedInputBase() {
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       if(err){
         console.log(err)
+        setLoading(false)
         return
       }
+      setOffset(15)
       setMessages(res.data.search)
       setLoading(false)
     })
   }
 
+  //load more messages and set the offset
   function loadMoreMessages(value) {
     setLoading(true)
-    setOffset(offset+15)
     const clientStub = new dgraph.DgraphClientStub(
-      // addr: optional, default: "http://localhost:8080"
       "http://25.27.157.248:8080",
-      // legacyApi: optional, default: false. Set to true when connecting to Dgraph v1.0.x
       false,
     );
     const dgraphClient = new dgraph.DgraphClient(clientStub);
@@ -103,6 +101,7 @@ export default function CustomizedInputBase() {
     const vars = { "$search": value };
     dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
       if(err){
+        setLoading(false)
         console.log(err)
         return
       }
@@ -112,11 +111,13 @@ export default function CustomizedInputBase() {
           tmpMessages.push(item)
         }
       })
+      setOffset(offset+15)
       setMessages(tmpMessages)
       setLoading(false)
     })
   }
 
+  //return a button to load more messages or loading indicator
   function MoreButton() {
     if (loading) {
       return (

@@ -24,7 +24,6 @@ Message.propTypes = {
   type: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   data: PropTypes.string,
-  // ReplyTo: PropTypes.number.isRequired,
 }
 
 Message.defaultProps = {
@@ -49,18 +48,15 @@ export default function Message(props) {
     timeStamp,
     message,
     address,
-    tags,
     data,
     ReplyTo,
-    isOnChain,
-    isSigned,
     preview,
     position,
   } = props
   const chatID = new URLSearchParams(window.location.search).get('id');
   const classes = useStyles()
-  const [previewImg, setPreview] = React.useState("");
-  const [open, setOpen] = React.useState(false)
+  const [previewImg, setPreview] = React.useState(""); //preview img of image or video thumbnail
+  const [open, setOpen] = React.useState(false) 
   const [downloaded, setDownloaded] = React.useState(false)
   const [downloading, setDownloading] = React.useState(false)
   const anchorRef = React.useRef(null)
@@ -84,15 +80,16 @@ export default function Message(props) {
   }
 
   useEffect(() => {
+    //decompress the preview image and set the image
     if (preview != "") {
       ungzip(Uint8Array.from(atob(preview), c => c.charCodeAt(0)))
         .then((decompressed) => {
-          // console.log(decompressed.toString());
           setPreview(decompressed.toString())
         });
     }
   }, [])
 
+  // the header of message
   function messageHeader() {
     return (<>
       <Typography
@@ -131,6 +128,7 @@ export default function Message(props) {
     )
   }
 
+  //show the messages that it replys to, if it is not replying to the root message
   function ReplyMessages(){
     if(ReplyTo.ID.toString() == chatID){
       return
@@ -167,12 +165,10 @@ export default function Message(props) {
     setOpen(false)
   }
 
+  // download the torrenrt data
   function downloadtorrent() {
     setDownloading(true)
-    // console.log("test" + ID);
     var torrentId = data
-    //var torrentId = 'magnet:?xt=urn:btih:69aac798fafb9a98be9c621ab04bb59b1366e771&dn=bitcoin-kG--621x414%40LiveMint.jpg&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com'
-    // var torrentId = 'magnet:?xt=urn:btih:eb919f2ec6fc08f9b9aff8e8ea14992d2c85caa5&dn=Screen+Recording+2019-10-11+at+3.18.50+PM.mov&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com'
     var WebTorrent = require('webtorrent');
     var client = new WebTorrent();
 
@@ -193,10 +189,11 @@ export default function Message(props) {
         setDownloaded(true)
         setDownloading(false)
         file.renderTo("#file" + ID.toString())
-        // setFilePath(file.path)
       })
     });
   }
+
+  //render the downloaded file/download button with preview/loading indicator if downloading
   function downloadbutton() {
     if (!downloaded) {
       if (!downloading) {
@@ -360,8 +357,6 @@ export default function Message(props) {
     default:
       return (
         <>
-          {tags}
-          {ReplyTo}
         </>
       )
   }
