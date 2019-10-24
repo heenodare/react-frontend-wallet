@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,6 +11,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import AddIcon from '@material-ui/icons/Add';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,13 +38,53 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})(props => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 
 export default function Search() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const classes = useStyles();
   const [search, setSearch] = React.useState("");
   const [loading, setLoading] = React.useState(false)
   const [messages, setMessages] = React.useState([])
   const [offset, setOffset] = React.useState(15)
+  const [order, setOrder] = React.useState("orderdesc: time,")
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   function ChatList(items) {
     return (
@@ -59,7 +106,7 @@ export default function Search() {
     const dgraphClient = new dgraph.DgraphClient(clientStub);
 
     const query = `	query search($search: string) {
-        search(func: allofterms(text, $search), first: 15) {
+        search(func: allofterms(text, $search), `+order+` first: 15) {
                 ID,
                 text,
                 time,
@@ -90,7 +137,7 @@ export default function Search() {
     const dgraphClient = new dgraph.DgraphClient(clientStub);
 
     const query = `	query search($search: string) {
-        search(func: allofterms(text, $search), first: 15, offset: `+ offset +`) {
+        search(func: allofterms(text, $search),`+order+` first: 15, offset: `+ offset +`) {
                 ID,
                 text,
                 time,
@@ -140,11 +187,47 @@ export default function Search() {
     }
   }
 
+  function MenuIconSwitch(){
+    switch (order){
+      case "orderdesc: time,":
+        return <ArrowDownwardIcon/>
+      case "orderasc: time,":
+        return <ArrowUpwardIcon/>
+      default:
+      return <MenuIcon/>
+    }
+  }
+
+  function Menu(){
+    return (
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <StyledMenuItem onClick={()=>{
+          setOrder("orderdesc: time,")
+          handleClose()
+        }}>
+          <ListItemText primary="by time(newest to oldest)" />
+        </StyledMenuItem>
+        <StyledMenuItem onClick={()=>{
+          setOrder("orderasc: time,")
+          handleClose()
+        }}>
+          <ListItemText primary="by time(oldest to newest)" />
+        </StyledMenuItem>
+      </StyledMenu>
+    )
+  }
+
   return (
     <>
       <Paper className={classes.root}>
-        <IconButton className={classes.iconButton} aria-label="menu">
-          <MenuIcon />
+        <IconButton className={classes.iconButton} aria-label="menu" onClick={handleClick}>
+          {MenuIconSwitch()}
         </IconButton>
         <InputBase
           className={classes.input}
@@ -155,7 +238,11 @@ export default function Search() {
             searchMessages(event.target.value)
           }}
         />
+        <IconButton className={classes.iconButton} aria-label="menu" onClick={()=>{searchMessages()}}>
+          <SearchIcon/>
+        </IconButton>
       </Paper>
+      {Menu()}
       {ChatList(messages)}
       {MoreButton()}
     </>
