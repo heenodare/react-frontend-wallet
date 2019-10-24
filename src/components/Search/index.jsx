@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -77,7 +77,7 @@ export default function Search() {
   const [messages, setMessages] = React.useState([])
   const [offset, setOffset] = React.useState(15)
   const [order, setOrder] = React.useState("orderdesc: time,")
-
+  var timeout = null;
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -126,6 +126,10 @@ export default function Search() {
       setLoading(false)
     })
   }
+
+  useEffect(() => {
+    searchMessages(search)
+  }, [order]);
 
   //load more messages and set the offset
   function loadMoreMessages(value) {
@@ -209,12 +213,14 @@ export default function Search() {
       >
         <StyledMenuItem onClick={()=>{
           setOrder("orderdesc: time,")
+          setMessages([])
           handleClose()
         }}>
           <ListItemText primary="by time(newest to oldest)" />
         </StyledMenuItem>
         <StyledMenuItem onClick={()=>{
           setOrder("orderasc: time,")
+          setMessages([])
           handleClose()
         }}>
           <ListItemText primary="by time(oldest to newest)" />
@@ -222,7 +228,7 @@ export default function Search() {
       </StyledMenu>
     )
   }
-
+  
   return (
     <>
       <Paper className={classes.root}>
@@ -233,12 +239,24 @@ export default function Search() {
           className={classes.input}
           placeholder="Search Chat"
           inputProps={{ 'aria-label': 'search google maps' }}
-          onChange={(event) => {
-            setSearch(event.target.value)
-            searchMessages(event.target.value)
+          // onChange={(event) => {
+          //   setSearch(event.target.value)
+          //   searchMessages(event.target.value)
+          // }}
+          onKeyUp={(event)=>{
+            clearTimeout(timeout);
+            var text = event.target.value
+            // Make a new timeout set to go off in 800ms
+            timeout = setTimeout(function () {
+                console.log('Input Value:', text);
+                setSearch(text)
+                searchMessages(text)
+            }, 300);
           }}
         />
-        <IconButton className={classes.iconButton} aria-label="menu" onClick={()=>{searchMessages()}}>
+        <IconButton className={classes.iconButton} aria-label="menu" onClick={()=>{
+          searchMessages(search)}}
+          >
           <SearchIcon/>
         </IconButton>
       </Paper>
