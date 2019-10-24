@@ -17,19 +17,6 @@ import MoreIcon from '@material-ui/icons/MoreVert'
 import { gzip, ungzip } from 'node-gzip';
 import ReplyIcon from '@material-ui/icons/Reply';
 
-Message.propTypes = {
-  timeStamp: PropTypes.number.isRequired,
-  address: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  type: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
-  data: PropTypes.string,
-}
-
-Message.defaultProps = {
-  data: 'no data',
-}
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -41,7 +28,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function Message(props) {
+const Message = React.forwardRef((props, ref) => {
+  
   const {
     ID,
     type,
@@ -52,6 +40,7 @@ export default function Message(props) {
     ReplyTo,
     preview,
     position,
+    handleClick
   } = props
   const chatID = new URLSearchParams(window.location.search).get('id');
   const classes = useStyles()
@@ -130,14 +119,22 @@ export default function Message(props) {
 
   //show the messages that it replys to, if it is not replying to the root message
   function ReplyMessages(){
+    const urlParams = new URLSearchParams(window.location.search);
+    if(ID == urlParams.get('id')){
+      return
+    }
+
     if(ReplyTo.ID.toString() == chatID){
       return
     }
-    else{    
+    else
+    {    
       return(
         <>
         <div style={{paddingLeft: 20}}>
-        <ReplyIcon color="disabled" fontSize="small" style={{paddingTop: 2}}/>
+        <IconButton aria-label="delete" className={classes.margin} size="small" onClick={()=>{handleClick(ReplyTo.ID)}}>
+          <ReplyIcon color="disabled" fontSize="small" />
+        </IconButton>
         <Typography
         variant="caption"
         display="inline"
@@ -268,7 +265,7 @@ export default function Message(props) {
   switch (type) {
     case 'text':
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} ref={ref}>
           <Grid item xs={12}>
             <div
               style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
@@ -296,7 +293,7 @@ export default function Message(props) {
       )
     case 'image':
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} ref={ref}>
           <Grid item xs={12}>
             <div
               style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
@@ -326,7 +323,7 @@ export default function Message(props) {
       )
     case "video":
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} ref={ref}>
           <Grid item xs={12}>
             <div
               style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
@@ -361,3 +358,6 @@ export default function Message(props) {
       )
   }
 }
+)
+
+export default Message

@@ -23,7 +23,6 @@ const mapDispatchToProps = dispatch => {
     },
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
@@ -41,6 +40,19 @@ function ChatContent(props) {
   const [Start, setStart] = React.useState(0)
   var promises = [];
 
+  //create a list of ref for each list item
+  const refs = messages.reduce((acc, value) => {
+    acc[value.ID] = createRef();
+    return acc;
+  }, {});
+
+  //scroll to the corresponding list item
+  const handleClick = id =>{
+    refs[id].current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })};
+  
   function MessageList(items) {
     return items.map(item => {
       return (
@@ -55,6 +67,8 @@ function ChatContent(props) {
           message={item.text}
           ReplyTo={item.replyTo[0]}
           preview={item.preview}
+          handleClick={handleClick}
+          ref={refs[item.ID]}
         />
       )
     })
@@ -82,7 +96,7 @@ function ChatContent(props) {
     return Promise.resolve()
   }
 
-  useEffect(() => {
+  useEffect(() => {    
     getIDList()
   },[])
 
