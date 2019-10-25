@@ -115,25 +115,23 @@ export default function PrimarySearchAppBar() {
             src="https://avatars3.githubusercontent.com/u/53857129?s=400&u=9d891a2c20c247d98b5d9c391f5e0f9ca4f52184&v=4"
           />
           <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          <IconButton
+            edge="start"
+            aria-label="search"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={()=>{navigate('/search')}}
+            color="inherit"
+          >
+            <SearchIcon />
+          </IconButton>
           <IconButton
             edge="end"
             aria-label="account of current user"
             aria-controls={menuId}
             aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
+            // onClick={handleProfileMenuOpen}
+            onClick={()=>{navigate('/profile')}}
             color="inherit"
           >
             <AccountCircle />

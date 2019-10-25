@@ -12,6 +12,6 @@ module.exports = {
   facebook: `Your optional Facebook App ID`,
   twitter: `Your Twitter username`,
   schema: {
-    author: `Jane Doe`,
+    author: `someone`,
   },
 }

@@ -8,34 +8,34 @@ import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { navigate } from '@reach/router'
-import { connect } from 'react-redux'
-import { setCurrentChat } from '../../redux/Chat/action'
 
-const mapStateToProps = state => {
-  return {
-    CurrentChat: state.chatData.CurrentChat,
+const timeDifference = time => {
+  const sPerMinute = 60
+  const sPerHour = sPerMinute * 60
+  const sPerDay = sPerHour * 24
+  const now = Math.trunc(Date.now() / 1000)
+  const elapsed = now - time
+  if (elapsed < sPerMinute) {
+    return `${Math.round(elapsed)} seconds ago`
   }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setCurrentChatConnect: chatitem => {
-      dispatch(setCurrentChat(chatitem))
-    },
+  if (elapsed < sPerHour) {
+    return `${Math.round(elapsed / sPerMinute)} minutes ago`
   }
+  if (elapsed < sPerDay) {
+    return `${Math.round(elapsed / sPerHour)} hours ago`
+  }
+  return new Date(time * 1000).toLocaleDateString()
 }
 
 function ChatItem(item) {
   const {
-    title,
-    lastMessage,
-    upvotes,
-    downvotes,
-    comments,
+    ID,
+    text,
+    count,
+    time,
+    address,
     avatarUrl,
   } = item.item
-  const { setCurrentChatConnect } = item
-
   return (
     <ListItem
       style={{ flexDirection: 'column' }}
@@ -43,38 +43,34 @@ function ChatItem(item) {
       button
       divider
       onClick={() => {
-        setCurrentChatConnect({ title, id: Math.random() })
-        navigate(`/chat`)
+        navigate('/chat?id='+ID)
       }}
     >
       <ListItem>
-        <ListItemAvatar>
-          <Avatar alt="avator" src={avatarUrl} />
-        </ListItemAvatar>
         <ListItemText
-          primary={<React.Fragment>{title}</React.Fragment>}
-          secondary={<>{lastMessage}</>}
+          primary={<React.Fragment>{"#"+ID+"  "+text}</React.Fragment>}
+          secondary={<>
+          {address}
+          {"     .     "}
+          {timeDifference(time)}</>}
         />
       </ListItem>
       <ListItem>
         <ListItemIcon>
           <ThumbUp />
         </ListItemIcon>
-        {upvotes}
+        0
         <ListItemIcon>
           <ThumbDown />
         </ListItemIcon>
-        {downvotes}
+        0
         <ListItemIcon>
           <Comment />
         </ListItemIcon>
-        {comments}
+        {count}
       </ListItem>
     </ListItem>
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChatItem)
+export default ChatItem

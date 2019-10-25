@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ChatItem from 'components/ChatItem'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import * as dgraph from 'dgraph-js-http'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,108 +20,108 @@ const useStyles = makeStyles(theme => ({
 
 export default function AlignItemsList() {
   const classes = useStyles()
+  const [lower, setLower] = React.useState([])
+  const [upper, setUpper] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
 
+
+  //get all the related branches in current chat
+  function getBranches() {
+    setLoading(true)
+    const urlParams = new URLSearchParams(window.location.search);
+    const clientStub = new dgraph.DgraphClientStub(
+      "http://25.27.157.248:8080",
+      false,
+    );
+    const dgraphClient = new dgraph.DgraphClient(clientStub);
+
+    //get the upper branch and the lower branches with more than 4 replys
+    const query = `	query getBranches($id: string) {
+      getUpperBranch(func: eq(ID, $id)){
+        replyTo{
+          ID,
+          time,
+          text,
+          address,
+          count: count(~replyTo)
+        }
+      }
+       getLowerBranches(func: eq(ID, $id)) {
+          replys:~replyTo @filter(gt(count(~replyTo), 4)){
+          ID,
+          text,
+          time,
+          address,
+          count: count(~replyTo)
+          }
+      }
+      }`;
+    const vars = { "$id": urlParams.get('id') };
+    dgraphClient.newTxn().queryWithVars(query, vars).then((res, err) => {
+      if(err){
+        setLoading(false)
+        console.log(err)
+        return
+      }
+      // console.log(res)
+      setUpper(res.data.getUpperBranch[0].replyTo[0])
+      if (res.data.getLowerBranches.length != 0) {
+        setLower(res.data.getLowerBranches[0].replys)
+      }
+      else {
+        setLower([])
+      }
+      setLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    getBranches()
+  }, [])
+
+  //display the chat list
   function ChatList(items) {
+    if (items.length == 0) {
+      return (
+        <ListItem>
+          <ListItemText primary="None" />
+        </ListItem>
+      )
+    }
+    else {
+      return (
+        <>
+          {items.map(item => (
+            <ChatItem key={item.ID} item={item} />
+          ))}
+        </>
+      )
+    }
+  }
+  if (!loading) {
     return (
       <>
-        {items.map(item => (
-          <ChatItem key={item.key} item={item} />
-        ))}
+        <List
+          subheader={<ListSubheader>Upper branch</ListSubheader>}
+          className={classes.root}
+        >
+          <ChatItem
+            key={upper.ID}
+            item={upper}
+          />
+        </List>
+        <List
+          subheader={<ListSubheader>Related Branches</ListSubheader>}
+          className={classes.root}
+        >
+            {ChatList(lower)}
+        </List>
       </>
     )
   }
-
-  return (
-    <>
-      <List
-        subheader={<ListSubheader>Upper branch</ListSubheader>}
-        className={classes.root}
-      >
-        <ChatItem
-          key={1}
-          item={{
-            key: 1,
-            title: 'Why BTC boosted so hard?',
-            lastMessage:
-              'Because of the current situation that the stock market is...',
-            upvotes: 10,
-            downvotes: 991,
-            comments: 103292,
-            avatarUrl:
-              'https://pbs.twimg.com/profile_images/712703916358537217/mcOketun_400x400.jpg',
-          }}
-        />
-      </List>
-      <List
-        subheader={<ListSubheader>Related Branches</ListSubheader>}
-        className={classes.root}
-      >
-        <List className={classes.root}>
-          {ChatList([
-            {
-              key: 1,
-              title: 'Why BTC boosted so hard?',
-              lastMessage:
-                'Because of the current situation that the stock market is...',
-              upvotes: 10,
-              downvotes: 991,
-              comments: 103292,
-              avatarUrl:
-                'https://thehappypuppysite.com/wp-content/uploads/2018/05/shiba-inu-header.jpg',
-            },
-            {
-              key: 2,
-              title: 'How to make ADA strong again?',
-              lastMessage: 'I love it, so I buy it...',
-              upvotes: 1204,
-              downvotes: 911,
-              comments: 10,
-              avatarUrl:
-                'https://thehappypuppysite.com/wp-content/uploads/2018/05/shiba-inu-header.jpg',
-            },
-            {
-              key: 3,
-              title: 'How to create a most decentralized coin?',
-              lastMessage: 'You should trust the force...',
-              upvotes: 461321,
-              downvotes: 9131,
-              comments: 11232,
-              avatarUrl:
-                'https://thehappypuppysite.com/wp-content/uploads/2018/05/shiba-inu-header.jpg',
-            },
-            {
-              key: 4,
-              title: 'This is the reason why I trust Heenodare',
-              lastMessage: 'I love it, so I use it...',
-              upvotes: 104,
-              downvotes: 91,
-              comments: 102,
-              avatarUrl:
-                'https://thehappypuppysite.com/wp-content/uploads/2018/05/shiba-inu-header.jpg',
-            },
-            {
-              key: 5,
-              title: 'I am holding 992135 BTC! I am satoshi!',
-              lastMessage: 'No one trust you, please stop it...',
-              upvotes: 0,
-              downvotes: 91812351,
-              comments: 101,
-              avatarUrl:
-                'https://thehappypuppysite.com/wp-content/uploads/2018/05/shiba-inu-header.jpg',
-            },
-            {
-              key: 6,
-              title: 'I know who is trying to build this',
-              lastMessage: 'The God...',
-              upvotes: 14,
-              downvotes: 1,
-              comments: 97,
-              avatarUrl:
-                'https://thehappypuppysite.com/wp-content/uploads/2018/05/shiba-inu-header.jpg',
-            },
-          ])}
-        </List>
-      </List>
-    </>
-  )
+  else {
+    return (
+      <CircularProgress style={{ margin: "0 auto", display: "block" }} color="secondary" />
+    )
+  }
 }

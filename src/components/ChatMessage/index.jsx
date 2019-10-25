@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -10,25 +10,12 @@ import MenuList from '@material-ui/core/MenuList'
 import Divider from '@material-ui/core/Divider'
 import Grow from '@material-ui/core/Grow'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import ThumbUp from '@material-ui/icons/ThumbUp'
-import ThumbDown from '@material-ui/icons/ThumbDown'
-
-Message.propTypes = {
-  timeStamp: PropTypes.number.isRequired,
-  address: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  type: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
-  data: PropTypes.string,
-  ReplyTo: PropTypes.number.isRequired,
-  isSigned: PropTypes.bool.isRequired,
-  isOnChain: PropTypes.bool.isRequired,
-  position: PropTypes.string.isRequired,
-}
-
-Message.defaultProps = {
-  data: 'no data',
-}
+import IconButton from '@material-ui/core/IconButton';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import MoreIcon from '@material-ui/icons/MoreVert'
+import { gzip, ungzip } from 'node-gzip';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,26 +23,31 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'right',
+    textAlign: 'left',
     color: theme.palette.text.primary,
   },
 }))
 
-export default function Message(props) {
+const Message = React.forwardRef((props, ref) => {
+  
   const {
+    ID,
     type,
     timeStamp,
     message,
     address,
-    tags,
     data,
     ReplyTo,
-    isOnChain,
-    isSigned,
+    preview,
     position,
+    handleClick
   } = props
+  const chatID = new URLSearchParams(window.location.search).get('id');
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const [previewImg, setPreview] = React.useState(""); //preview img of image or video thumbnail
+  const [open, setOpen] = React.useState(false) 
+  const [downloaded, setDownloaded] = React.useState(false)
+  const [downloading, setDownloading] = React.useState(false)
   const anchorRef = React.useRef(null)
 
   const timeDifference = time => {
@@ -76,6 +68,88 @@ export default function Message(props) {
     return new Date(time * 1000).toLocaleDateString()
   }
 
+  useEffect(() => {
+    //decompress the preview image and set the image
+    if (preview != "") {
+      ungzip(Uint8Array.from(atob(preview), c => c.charCodeAt(0)))
+        .then((decompressed) => {
+          setPreview(decompressed.toString())
+        });
+    }
+  }, [])
+
+  // the header of message
+  function messageHeader() {
+    return (<>
+      <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 14 }}
+      >
+        {"#" + ID + " " + address}
+      </Typography>
+      <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+      >
+        {timeDifference(timeStamp)}
+      </Typography>
+      <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 10, color: 'grey', paddingLeft: 10 }}
+      >
+        {ReplyTo.ID.toString() == chatID ? "" : "Replying to #" + ReplyTo.ID.toString()}
+      </Typography>
+      <IconButton
+        edge="end"
+        aria-label="more"
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <MoreIcon style={{ width: 20, height: 20 }} />
+      </IconButton>
+    </>
+    )
+  }
+
+  //show the messages that it replys to, if it is not replying to the root message
+  function ReplyMessages(){
+    const urlParams = new URLSearchParams(window.location.search);
+    if(ID == urlParams.get('id')){
+      return
+    }
+
+    if(ReplyTo.ID.toString() == chatID){
+      return
+    }
+    else
+    {    
+      return(
+        <>
+        <div style={{paddingLeft: 20}}>
+        <IconButton aria-label="delete" className={classes.margin} size="small" onClick={()=>{handleClick(ReplyTo.ID)}}>
+          <ReplyIcon color="disabled" fontSize="small" />
+        </IconButton>
+        <Typography
+        variant="caption"
+        display="inline"
+        align="left"
+        style={{ fontSize: 12 , paddingLeft: 5 }}
+      >
+        {ReplyTo.text}
+        </Typography>
+        </div>
+        <Divider/>
+        </>
+    )
+    }
+  }
+
   function handleToggle() {
     setOpen(prevOpen => !prevOpen)
   }
@@ -86,6 +160,69 @@ export default function Message(props) {
     }
 
     setOpen(false)
+  }
+
+  // download the torrenrt data
+  function downloadtorrent() {
+    setDownloading(true)
+    var torrentId = data
+    var WebTorrent = require('webtorrent');
+    var client = new WebTorrent();
+
+    client.on('error', err => {
+      console.log('[+] Webtorrent error: ' + err.message);
+    });
+
+    client.add(torrentId, (torrent) => {
+      // console.log('Client is downloading:', torrent.infoHash)
+
+      console.log(torrent.files)
+      torrent.on('done', () => {
+        console.log('Progress: 100%');
+      })
+      torrent.files.forEach(function (file) {
+        // Display the file by appending it to the DOM. Supports video, audio, images, and
+        // more. Specify a container element (CSS selector or reference to DOM node).
+        setDownloaded(true)
+        setDownloading(false)
+        file.renderTo("#file" + ID.toString())
+      })
+    });
+  }
+
+  //render the downloaded file/download button with preview/loading indicator if downloading
+  function downloadbutton() {
+    if (!downloaded) {
+      if (!downloading) {
+        return (
+          <>
+            <img src={previewImg}></img>
+            <IconButton aria-label="download" onClick={downloadtorrent}>
+              <GetAppIcon />
+            </IconButton>
+          </>
+        )
+      }
+      else {
+        return (
+          <CircularProgress style={{ display: "block" }} color="secondary" />
+        )
+      }
+    }
+    else {
+      switch (type) {
+        case "image":
+          return (
+            <img id={"file" + ID} alt={"loading"} style={{ maxHeight: 150 }} />
+          )
+        case "video":
+          return (
+            <video id={"file" + ID} width="320" height="240" autoPlay></video>
+          )
+        default:
+          return <></>
+      }
+    }
   }
 
   function PoperMenu() {
@@ -106,7 +243,7 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>Edit</MenuItem>
                   <MenuItem onClick={handleClose}>Forward</MenuItem>
                   <MenuItem onClick={handleClose}>Delete</MenuItem>
-                  <Divider />
+                  {/* <Divider />
                   <MenuItem onClick={handleClose}>Join Chat</MenuItem>
                   <MenuItem onClick={handleClose}>
                     <ThumbUp />
@@ -115,7 +252,7 @@ export default function Message(props) {
                   <MenuItem onClick={handleClose}>
                     <ThumbDown />
                     Dislike
-                  </MenuItem>
+                  </MenuItem> */}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -128,119 +265,99 @@ export default function Message(props) {
   switch (type) {
     case 'text':
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} ref={ref}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
+              style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
-              onKeyPress={() => {}}
+              onKeyPress={() => { }}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
+                {messageHeader()}
+                <Divider />
+                {ReplyMessages()}
                 <Typography
                   variant="body2"
-                  display="inline"
+                  display="block"
                   style={{ paddingRight: 10 }}
                 >
                   {message}
                 </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  gutterBottom
-                  align="right"
-                  style={{ fontSize: 10, color: 'grey' }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
               </Paper>
             </div>
           </Grid>
-          {PoperMenu()}
+          {/* {PoperMenu()} */}
         </Grid>
       )
     case 'image':
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} ref={ref}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
+              style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
-              onKeyPress={() => {}}
+              onKeyPress={() => { }}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <img src={data} alt={message} style={{ maxHeight: 150 }} />
+                {messageHeader()}
+                <Divider />
+                {ReplyMessages()}
+                {downloadbutton()}
                 <Divider />
                 <Typography
                   variant="body2"
-                  display="inline"
+                  display="block"
                   style={{ paddingRight: 10 }}
                 >
                   {message}
                 </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  gutterBottom
-                  align="right"
-                  style={{ fontSize: 10, color: 'grey' }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
               </Paper>
             </div>
           </Grid>
-          {PoperMenu()}
+          {/* {PoperMenu()} */}
         </Grid>
       )
-    case 'youtube':
+    case "video":
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} ref={ref}>
           <Grid item xs={12}>
             <div
-              style={{ float: position, maxWidth: '70%', maxHeight: '10%' }}
+              style={{ float: position, minWidth: '100%', maxWidth: '100%', maxHeight: '10%' }}
               role="presentation"
               onClick={handleToggle}
-              onKeyPress={() => {}}
+              onKeyPress={() => { }}
               ref={anchorRef}
             >
               <Paper className={classes.paper}>
-                <iframe title="youtube video" width="100%" src={data} />
+                {messageHeader()}
+                <Divider />
+                {ReplyMessages()}
+                {downloadbutton()}
                 <Divider />
                 <Typography
                   variant="body2"
-                  display="inline"
+                  display="block"
                   style={{ paddingRight: 10 }}
                 >
                   {message}
                 </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  gutterBottom
-                  align="right"
-                  style={{ fontSize: 10, color: 'grey' }}
-                >
-                  {timeDifference(timeStamp)}
-                </Typography>
               </Paper>
             </div>
           </Grid>
-          {PoperMenu()}
+          {/* {PoperMenu()} */}
         </Grid>
       )
     default:
       return (
         <>
-          {tags}
-          {ReplyTo}
-          {isOnChain}
-          {isSigned}
-          {address}
         </>
       )
   }
 }
+)
+
+export default Message

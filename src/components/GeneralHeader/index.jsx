@@ -1,11 +1,8 @@
 import React from 'react'
-
 import { fade, makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 
 const useStyles = makeStyles(theme => ({
@@ -70,31 +67,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function PrimarySearchAppBar() {
+export default function GeneralHeader() {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null)
-
-  const isMenuOpen = Boolean(anchorEl)
-
-  function handleMenuClose() {
-    setAnchorEl(null)
-  }
-
-  const menuId = 'primary-search-account-menu'
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>some function 1</MenuItem>
-      <MenuItem onClick={handleMenuClose}>some function 2</MenuItem>
-    </Menu>
-  )
 
   return (
     <>
@@ -112,7 +86,6 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </>
   )
 }

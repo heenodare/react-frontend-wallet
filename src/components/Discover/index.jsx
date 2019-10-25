@@ -7,8 +7,6 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import ChatList from 'components/ChatList'
-import UserList from 'components/UserList'
-import CommentList from 'components/CommentList'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -71,10 +69,9 @@ export default function FullWidthTabs() {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <Tab label="My Chat" {...a11yProps(0)} />
-          <Tab label="Trending" {...a11yProps(1)} />
-          <Tab label="User" {...a11yProps(2)} />
-          <Tab label="Comment" {...a11yProps(3)} />
+          <Tab label="Latest" {...a11yProps(0)} />
+          <Tab label="Random" {...a11yProps(1)} />
+          <Tab label="My Chat" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -83,16 +80,13 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <ChatList />
+          <ChatList type="latest"/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <ChatList />
+          <ChatList type="random"/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <UserList />
-        </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          <CommentList />
+          <ChatList type="myChat"/>
         </TabPanel>
       </SwipeableViews>
     </div>
