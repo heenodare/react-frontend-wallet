@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect }from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -37,19 +37,24 @@ const useStyles = makeStyles({
   },
 })
 
-function buildFileSelector() {
-  const fileSelector = document.createElement('input');
-  fileSelector.setAttribute('type', 'file');
-  return fileSelector;
-}
-
 function ChatInput() {
   const classes = useStyles()
-  const fileSelector = buildFileSelector()
+  const [fileSelector, setFileSelector] = useState()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
   
+  useEffect(() => {
+    setFileSelector(buildFileSelector())
+  }, [])
+
+
+  function buildFileSelector() {
+    const fileSelector = document.createElement('input');
+    fileSelector.setAttribute('type', 'file');
+    return fileSelector;
+  }
+
   function handleFileSelect() {
     fileSelector.click();
   }
