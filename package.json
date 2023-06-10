@@ -14,7 +14,7 @@
     "dgraph-js-http": "^1.1.0-rc18",
     "drag-drop": "^5.0.1",
     "end-of-stream": "1.1.0",
-    "gatsby": "^2.3.22",
+    "gatsby": "^4.25.7",
     "gatsby-image": "^2.0.38",
     "gatsby-plugin-catch-links": "^2.0.13",
     "gatsby-plugin-google-analytics": "^2.0.18",
